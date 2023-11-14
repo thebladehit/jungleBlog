@@ -1,11 +1,8 @@
 <script>
-
+import Header from "./components/Header.svelte";
 </script>
 
-<main>
-Jungle!!!!!!!!!
-</main>
+<Header/>
 
 <style>
-
 </style>
