@@ -29,6 +29,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        font-family: 'Inknut Antiqua', serif;
     }
 
     nav {

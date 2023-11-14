@@ -5,5 +5,6 @@
 <style>
     .content-wrapper {
         flex: 1;
+        font-family: 'Inknut Antiqua', serif;
     }
 </style>

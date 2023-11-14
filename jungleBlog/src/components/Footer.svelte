@@ -8,6 +8,7 @@
         color: white;
         padding: 1.3rem;
         margin: 0;
+        font-family: 'Inknut Antiqua', serif;
         font-size: 1.5rem;
         display: flex;
         justify-content: center;
