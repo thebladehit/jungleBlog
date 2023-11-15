@@ -27,3 +27,27 @@ body{
 a, button, input[type="submit"], input[type="button"], label[for] {
   cursor: url("./assets/images/pointer.png"), pointer;
 }
+
+
+/* Змінюємо весь скролбар */
+::-webkit-scrollbar {
+  width: 12px; /* ширина для вертикального скролбару */
+  height: 12px; /* висота для горизонтального скролбару */
+}
+
+/* Доріжка скролбару (тло) */
+::-webkit-scrollbar-track {
+  background: #a6c3a0; /* колір фону доріжки */
+}
+
+/* Ручка скролбару */
+::-webkit-scrollbar-thumb {
+  background-color: #1a4814; /* колір ручки скролбару */
+  border-radius: 6px;
+  border: 3px solid #a6c3a0; /* створення бордюрів та додання відступів */
+}
+
+/* Ручка скролбару при наведенні */
+::-webkit-scrollbar-thumb:hover {
+  background: #123512; /* колір ручки скролбару при наведенні */
+}
