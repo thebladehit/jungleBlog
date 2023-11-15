@@ -53,7 +53,7 @@
     }
 
     .toggle {
-        cursor: pointer;
+        cursor: url("../assets/images/pointer.png"), pointer;
         display: inline-block;
         position: relative;
         width: 50px;
