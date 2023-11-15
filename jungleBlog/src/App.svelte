@@ -1,12 +1,12 @@
 <script>
     import Header from "./components/Header.svelte";
     import Footer from "./components/Footer.svelte";
-    import Content from "./components/Content.svelte";
+    import Main from "./components/Main.svelte";
 </script>
 
 <div class="app-container">
     <Header/>
-    <Content/>
+    <Main/>
     <Footer/>
 </div>
 
