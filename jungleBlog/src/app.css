@@ -28,8 +28,6 @@ a, button, input[type="submit"], input[type="button"], label[for] {
   cursor: url("./assets/images/pointer.png"), pointer;
 }
 
-
-
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
