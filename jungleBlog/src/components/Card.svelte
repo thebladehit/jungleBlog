@@ -38,6 +38,7 @@
     }
 
     .text-content h1 {
+        font-weight: 400;
         font-size: 1.5rem;
         margin-bottom: 0.25rem;
         position: relative;

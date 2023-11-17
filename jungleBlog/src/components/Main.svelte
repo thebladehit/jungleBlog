@@ -18,7 +18,7 @@
   .content-wrapper {
     max-width: 1268px;
     margin: 0 auto;
-    padding: 2rem;
+    margin-bottom: 50px;
     font-family: 'Inknut Antiqua', serif;
   }
 
