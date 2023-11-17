@@ -1,12 +1,17 @@
 <script>
+    import {Router, Route, Link} from "svelte-routing";
     import Header from "./components/Header.svelte";
     import Footer from "./components/Footer.svelte";
     import Main from "./components/Main.svelte";
+    import Article from "./components/Article.svelte";
 </script>
 
 <div class="app-container">
     <Header/>
-    <Main/>
+    <Router>
+        <Route path = "/" component={Main}/>
+        <Route path = "article" component={Article}/>
+    </Router>
     <Footer/>
 </div>
 

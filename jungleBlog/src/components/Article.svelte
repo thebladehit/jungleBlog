@@ -29,7 +29,6 @@
             <img src="src/assets/images/third.png" alt="Jungle Image" />
         </section>
     </div>
-    <div class="line"></div>
     <section class="form-section">
         <input bind:value={name} placeholder="Name" />
         <textarea bind:value={comment} placeholder="Your comment"></textarea>
