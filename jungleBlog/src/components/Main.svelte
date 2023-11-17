@@ -19,7 +19,6 @@
     max-width: 1268px;
     margin: 0 auto;
     margin-bottom: 50px;
-    font-family: 'Inknut Antiqua', serif;
   }
 
   .cards-container {

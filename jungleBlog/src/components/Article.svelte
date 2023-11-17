@@ -42,6 +42,7 @@
             <div class="comment">
                 <h2>{comment.name}</h2>
                 <p>{comment.text}</p>
+                <div class="date">12.11.2023 | 12:36</div>
             </div>
         {/each}
     </section>
@@ -53,12 +54,35 @@
     }
 
     main {
-        font-family: 'Inknut Antiqua', serif;
         background-color: #eaffe0;
         max-width: 1268px;
         margin: auto;
         margin-bottom: 50px;
         padding: 20px;
+    }
+
+    h1 {
+        font-size: 48px;
+        padding: 0;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: -10px;
+    }
+
+    p {
+        line-height: 2.0em;
+    }
+
+    input {
+        height: 50px;
+    }
+
+    textarea {
+        height: 130px;
+        resize: none;
     }
 
     .content-container {
@@ -106,10 +130,11 @@
 
     .form-section input, .form-section textarea {
         font-family: 'Inknut Antiqua', serif;
+        font-size: 20px;
         background-color: #d6e5d3;
         color: black;
         width: 100%;
-        padding: 10px;
+        padding: 10px 20px;
         margin-bottom: 10px;
         border: none;
         border-radius: 15px;
@@ -123,12 +148,13 @@
 
     .form-section button {
         background-color: #d6e5d3;
+        font-size: 20px;
         color: black;
         border: none;
         border-radius: 20px;
         transition: background-color 0.3s ease;
         width: 300px;
-        height: 40px;
+        height: 50px;
         font-family: 'Inknut Antiqua', serif;
     }
 
@@ -137,7 +163,7 @@
     }
 
     .comments-section {
-        padding: 20px;
+        padding: 20px 30px;
         box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.3);
         width: calc(100% - 40px);
         margin-left: 20px;
@@ -146,8 +172,18 @@
     .comment {
         border-bottom: 1px solid #013413;
         padding-bottom: 10px;
-        padding-left: 10px;
+        padding-left: 20px;
         margin-bottom: 10px;
+    }
+
+    .comment p {
+        font-size: 20px;
+    }
+
+    .date {
+        font-size: 14px;
+        font-weight: 700;
+        text-align: right;
     }
 
     .comment:last-child {

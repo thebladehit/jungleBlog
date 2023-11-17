@@ -24,7 +24,6 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        font-family: 'Inknut Antiqua', serif;
         cursor: url("../assets/images/pointer.png"), pointer;
     }
 
