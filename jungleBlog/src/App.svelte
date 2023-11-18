@@ -10,7 +10,7 @@
     <Header/>
     <Router>
         <Route path = "/" component={Main}/>
-        <Route path = "article" component={Article}/>
+        <Route path = "article/:id" component={Article}/>
     </Router>
     <Footer/>
 </div>

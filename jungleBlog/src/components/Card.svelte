@@ -1,9 +1,7 @@
 <script>
-    import { Router, Route, Link} from "svelte-routing";
     export let article;
 </script>
 
-<Link to="article">
 <div class="card">
     <div class="text-content">
         <h1>{article.title}</h1>
@@ -13,7 +11,6 @@
         <img src={article.image} alt={article.title} />
     </div>
 </div>
-</Link>
 
 <style>
     .card {
