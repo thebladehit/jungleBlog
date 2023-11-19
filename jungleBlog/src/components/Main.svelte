@@ -1,7 +1,10 @@
 <script>
   import Content from "./Content.svelte";
   import Card from "./Card.svelte";
+
   import { articles } from "../articles.js";
+
+  import { Router, Route, Link} from "svelte-routing";
 </script>
 
 <div class="content-wrapper">
@@ -10,7 +13,9 @@
 
 <div class="cards-container">
   {#each articles as article}
-    <Card {article} />
+    <Link to={`article/${article.id}`}>
+      <Card {article} />
+    </Link>
   {/each}
 </div>
 

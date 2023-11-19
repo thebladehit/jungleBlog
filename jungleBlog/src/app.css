@@ -25,7 +25,7 @@ body{
 }
 
 a, button, input[type="submit"], input[type="button"], label[for] {
-  cursor: url("./assets/images/pointer.png"), pointer;
+  cursor: url("../public/res/pointer.png"), pointer;
 }
 
 ::-webkit-scrollbar {

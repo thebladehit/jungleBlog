@@ -1,4 +1,23 @@
 <script>
+    import {useLocation} from "svelte-routing";
+    import {articles} from "../articles.js";
+
+    const location = useLocation()
+
+    let articleId;
+    $: {
+        if ($location) {
+            const pathArray = $location.pathname.split('/');
+            const pathId = pathArray[pathArray.length - 1];
+            articleId = parseInt(pathId);
+        }
+        if ($location.pathname === '/') {
+            window.location.reload()
+        }
+    }
+
+    $: article = articles.find(a => a.id === articleId);
+
     let comments = [
         { name: 'Ryan', text: 'Lorem ipsum dolor sit amet...' },
         { name: 'Gosling', text: 'Lorem ipsum dolor sit amet...' },
@@ -16,20 +35,19 @@
             comment = '';
         }
     }
+
 </script>
 
 <main>
     <div class="content-container">
         <section class="text-section">
-            <h1>Day 1</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Interdum varius sit amet mattis vulputate. Habitant morbi tristique senectus et netus et malesuada fames ac. Massa eget egestas purus viverra accumsan. Faucibus a pellentesque sit amet porttitor eget. Tincidunt vitae semper quis lectus nulla at. Dui faucibus in ornare quam viverra orci sagittis eu volutpat. Nunc mattis enim ut tellus elementum sagittis. Elit ullamcorper dignissim cras tincidunt lobortis feugiat. Est placerat in egestas erat imperdiet sed euismod nisi porta.
-                Id aliquet lectus proin nibh nisl condimentum id venenatis. Velit euismod in pellentesque massa placerat duis ultricies. Molestie nunc non blandit massa. Elementum nisi quis eleifend quam adipiscing. Augue lacus viverra vitae congue eu consequat ac felis donec. Odio euismod lacinia at quis risus sed. Facilisis gravida neque convallis a cras semper auctor.</p>
+            <h1>{article.title}</h1>
+            <p>{article.text}</p>
         </section>
         <section class="image-section">
-            <img src="src/assets/images/third.png" alt="Jungle Image" />
+            <img src={article.image} alt={article.title} />
         </section>
     </div>
-    <div class="line"></div>
     <section class="form-section">
         <input bind:value={name} placeholder="Name" />
         <textarea bind:value={comment} placeholder="Your comment"></textarea>
