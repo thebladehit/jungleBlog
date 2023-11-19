@@ -11,7 +11,6 @@
             const pathId = pathArray[pathArray.length - 1];
             articleId = parseInt(pathId);
         }
-
         if ($location.pathname === '/') {
             window.location.reload()
         }

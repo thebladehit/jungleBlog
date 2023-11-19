@@ -9,7 +9,7 @@
     </div>
     <div class="second">
         <h1>Deserted Island</h1>
-        <p class="rigthParagraph">On the deserted island, golden sands meet beneath the boundless sky.</p>
+        <p class="rightParagraph">On the deserted island, golden sands meet beneath the boundless sky.</p>
     </div>
 </div>
 
@@ -79,7 +79,7 @@
         max-width: 400px;
     }
 
-    p.rigthParagraph {
+    p.rightParagraph {
         float: right;
         margin-top: -25px;
         max-width: 400px;

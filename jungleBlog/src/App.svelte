@@ -8,10 +8,12 @@
 
 <div class="app-container">
     <Header/>
+
     <Router>
         <Route path = "/" component={Main}/>
         <Route path = "article/:id" component={Article}/>
     </Router>
+
     <Footer/>
 </div>
 

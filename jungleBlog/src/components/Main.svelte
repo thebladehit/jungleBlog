@@ -1,7 +1,9 @@
 <script>
   import Content from "./Content.svelte";
   import Card from "./Card.svelte";
+
   import { articles } from "../articles.js";
+
   import { Router, Route, Link} from "svelte-routing";
 </script>
 
