@@ -23,8 +23,7 @@
     header {
         background-color: #1a4814;
         color: white;
-        padding: 1rem;
-        margin: 0;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -40,9 +39,16 @@
     }
 
     nav a {
-        color: white;
+        color: #EAFFE0;
         text-decoration: none;
-        padding: 0.5rem;
+        padding: 1.5rem;
+        font-weight: 700;
+        font-size: 20px;
+        transition: linear .3s;
+    }
+
+    nav a:hover {
+        color: #d0fabd;
     }
 
     .theme-switcher {
@@ -58,12 +64,12 @@
         position: relative;
         width: 50px;
         height: 25px;
-        background-color: #ccc;
+        background-color: #EAFFE0;
         border-radius: 25px;
     }
 
     .toggle-handler {
-        background-color: #fff;
+        background: #1a4814;
         border-radius: 50%;
         position: absolute;
         left: 2px;

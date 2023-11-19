@@ -53,6 +53,7 @@
 <style>
     h1 {
         font-size: 55px;
+        font-weight: 400;
     }
 
     p {

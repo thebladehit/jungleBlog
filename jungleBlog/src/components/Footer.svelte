@@ -5,11 +5,11 @@
 <style>
     footer {
         background-color: #1a4814;
-        color: white;
-        padding: 1.3rem;
+        height: 88px;
+        color: #EAFFE0;
         margin: 0;
         font-family: 'Inknut Antiqua', serif;
-        font-size: 1.5rem;
+        font-size: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
