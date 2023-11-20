@@ -15,7 +15,7 @@ body{
   color: Black;
   background-color: #eaffe0;
 
-  cursor: url("./assets/images/cursor.png"), auto;
+  cursor: url("/res/cursor.png"), auto;
 
   margin: 0;
   padding: 0;
@@ -25,7 +25,7 @@ body{
 }
 
 a, button, input[type="submit"], input[type="button"], label[for] {
-  cursor: url("../public/res/pointer.png"), pointer;
+  cursor: url("/res/pointer.png"), pointer;
 }
 
 a {
