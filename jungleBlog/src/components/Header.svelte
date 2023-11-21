@@ -55,7 +55,7 @@
 
     .theme-switcher {
         position: absolute;
-        right: 25%;
+        right: 23%;
         top: 56%;
         transform: translateY(-50%);
     }
@@ -71,7 +71,7 @@
     }
 
     .toggle-handler {
-        background: #1a4814;
+        background: var(--header-background-color);
         border-radius: 50%;
         position: absolute;
         left: 2px;

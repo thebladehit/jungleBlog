@@ -13,6 +13,14 @@
 
   --card-background-color: #c8eac1;
   --card-line-color: #1A4814;
+
+  --form-section-background: #d6e5d3;
+  --form-color: black;
+  --form-placeholer-color: grey;
+
+  --comments-background: #c8eac1;
+
+  --button-hover-color: #a49f9f;
 }
 
 [data-theme="dark"] {
@@ -24,6 +32,14 @@
 
   --card-background-color: #588157;
   --card-line-color: #EAFFE0;
+
+  --form-section-background: #87A186;
+  --form-color: #EAFFE0;
+  --form-placeholer-color: #cfe5cc;
+
+  --comments-background: #588157;
+
+  --button-hover-color: #588157;
 }
 
 body{

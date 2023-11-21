@@ -72,7 +72,7 @@
     }
 
     main {
-        background-color: #eaffe0;
+        background-color: var(--main-background-color);
         max-width: 1268px;
         margin: auto;
         margin-bottom: 50px;
@@ -107,8 +107,8 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
-        background-color: #eaffe0;
-        border-bottom: 3px solid #013413;
+        background-color: var(--main-background-color);
+        border-bottom: 3px solid var(--main-color);
     }
 
     .text-section, .image-section {
@@ -139,23 +139,27 @@
     }
 
     .comments-section {
-        background-color: #c8eac1;
+        background-color: var(--comments-background);
     }
 
     .form-section{
-        background-color: #eaffe0;
+        background-color: var(--main-background-color);
     }
 
     .form-section input, .form-section textarea {
         font-family: 'Inknut Antiqua', serif;
         font-size: 20px;
-        background-color: #d6e5d3;
-        color: black;
+        background-color: var(--form-section-background);
+        color: var(--form-color);
         width: 100%;
         padding: 10px 20px;
         margin-bottom: 10px;
         border: none;
         border-radius: 15px;
+    }
+
+    ::placeholder {
+        color: var(--form-placeholer-color);
     }
 
     .button-container {
@@ -165,9 +169,9 @@
     }
 
     .form-section button {
-        background-color: #d6e5d3;
+        background-color: var(--form-section-background);
         font-size: 20px;
-        color: black;
+        color: var(--main-color);
         border: none;
         border-radius: 20px;
         transition: background-color 0.3s ease;
@@ -177,7 +181,7 @@
     }
 
     .form-section button:hover {
-        background-color: #a49f9f;
+        background-color: var(--button-hover-color);
     }
 
     .comments-section {
