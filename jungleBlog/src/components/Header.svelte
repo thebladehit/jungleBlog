@@ -1,3 +1,11 @@
+<script>
+    function toggleTheme(){
+        const body = document.body;
+        body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+        console.log(body.dataset.theme)
+    }
+</script>
+
 <header>
     <nav>
         <a href="#articles">Articles</a>
@@ -6,7 +14,7 @@
         <a href="#donate">Donate</a>
     </nav>
     <div class="theme-switcher">
-        <input type="checkbox" id="theme-toggle"/>
+        <input on:click={toggleTheme} type="checkbox" id="theme-toggle"/>
         <label for="theme-toggle" class="toggle">
             <span class="toggle-handler"></span>
         </label>
@@ -15,14 +23,9 @@
 
 
 <style>
-    :global(body) {
-        margin: 0;
-        padding: 0;
-    }
-
     header {
-        background-color: #1a4814;
-        color: white;
+        background-color: var(--header-background-color);
+        color: var(--header-color);
         height: 60px;
         display: flex;
         align-items: center;

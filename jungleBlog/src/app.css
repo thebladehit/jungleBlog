@@ -4,6 +4,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --header-background-color: #1a4814;
+  --header-color: white;
+}
+
+[data-theme="dark"] {
+  --header-background-color: #1F3329;
+  --header-color: #EAFFE0;
 }
 
 body{
