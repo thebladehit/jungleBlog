@@ -14,10 +14,10 @@
 
 <style>
     .card {
+        background-color: var(--card-background-color);
+        color: var(--main-color);
         width: 400px;
         height: 350px;
-        background-color: #c8eac1;
-        color: black;
         overflow: hidden;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
@@ -53,7 +53,7 @@
         bottom: 0;
         width: calc(100% - 2rem);
         height: 3px;
-        background-color: #1a4814;
+        background-color: var(--card-line-color);
         border-radius: 5px;
     }
 

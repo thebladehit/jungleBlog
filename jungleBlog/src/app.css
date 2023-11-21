@@ -7,11 +7,23 @@
 
   --header-background-color: #1a4814;
   --header-color: white;
+
+  --main-background-color: #eaffe0;
+  --main-color: #001419;
+
+  --card-background-color: #c8eac1;
+  --card-line-color: #1A4814;
 }
 
 [data-theme="dark"] {
   --header-background-color: #1F3329;
   --header-color: #EAFFE0;
+
+  --main-background-color: #344E41;
+  --main-color: #EAFFE0;
+
+  --card-background-color: #588157;
+  --card-line-color: #EAFFE0;
 }
 
 body{
@@ -20,8 +32,9 @@ body{
   font-weight: 400;
 
   color-scheme: light dark;
-  color: Black;
-  background-color: #eaffe0;
+
+  background-color: var(--main-background-color);
+  color: var(--main-color);
 
   cursor: url("/res/cursor.png"), auto;
 

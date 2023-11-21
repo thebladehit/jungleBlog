@@ -1,8 +1,7 @@
 <script>
     function toggleTheme(){
         const body = document.body;
-        body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
-        console.log(body.dataset.theme)
+        body.dataset.theme = body.dataset.theme === 'dark' ? 'default' : 'dark';
     }
 </script>
 
