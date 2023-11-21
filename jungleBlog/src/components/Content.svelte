@@ -1,5 +1,5 @@
 <script>
-    import photo from '../../public/res/sixth.png';
+    import photo from '/res/sixth.png';
 </script>
 
 <div class="title">

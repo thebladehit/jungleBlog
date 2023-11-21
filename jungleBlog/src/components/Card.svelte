@@ -24,7 +24,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        cursor: url("../assets/images/pointer.png"), pointer;
+        cursor: url("/res/pointer.png"), pointer;
     }
 
     .card:hover {
