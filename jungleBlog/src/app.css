@@ -4,6 +4,42 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --header-background-color: #1a4814;
+  --header-color: white;
+
+  --main-background-color: #eaffe0;
+  --main-color: #001419;
+
+  --card-background-color: #c8eac1;
+  --card-line-color: #1A4814;
+
+  --form-section-background: #d6e5d3;
+  --form-color: black;
+  --form-placeholer-color: grey;
+
+  --comments-background: #c8eac1;
+
+  --button-hover-color: #a49f9f;
+}
+
+[data-theme="dark"] {
+  --header-background-color: #1F3329;
+  --header-color: #EAFFE0;
+
+  --main-background-color: #344E41;
+  --main-color: #EAFFE0;
+
+  --card-background-color: #588157;
+  --card-line-color: #EAFFE0;
+
+  --form-section-background: #87A186;
+  --form-color: #EAFFE0;
+  --form-placeholer-color: #cfe5cc;
+
+  --comments-background: #588157;
+
+  --button-hover-color: #588157;
 }
 
 body{
@@ -12,8 +48,9 @@ body{
   font-weight: 400;
 
   color-scheme: light dark;
-  color: Black;
-  background-color: #eaffe0;
+
+  background-color: var(--main-background-color);
+  color: var(--main-color);
 
   cursor: url("/res/cursor.png"), auto;
 
@@ -43,7 +80,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #1a4814;
+  background-color: var(--header-background-color);
   border-radius: 6px;
   border: 3px solid #a6c3a0;
 }

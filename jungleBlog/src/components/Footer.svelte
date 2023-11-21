@@ -4,9 +4,9 @@
 
 <style>
     footer {
-        background-color: #1a4814;
+        background-color: var(--header-background-color);
+        color: var(--header-color);
         height: 88px;
-        color: #EAFFE0;
         margin: 0;
         font-family: 'Inknut Antiqua', serif;
         font-size: 20px;
