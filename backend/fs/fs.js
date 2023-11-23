@@ -16,6 +16,24 @@ const isFileExist = async (filePath) => {
   } catch (err) {
     return false;
   }
-}
+};
 
-module.exports = { readFile, isFileExist };
+const writeFile = async (path, data) => {
+  try {
+    await fsp.appendFile(path, data);
+  } catch (err) {
+    throw err;
+  }
+};
+
+const createDir = async (dirPath) => {
+  try {
+    if (!await isFileExist(dirPath)) {
+      await fsp.mkdir(dirPath);
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { readFile, isFileExist, writeFile, createDir };
