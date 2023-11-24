@@ -55,13 +55,13 @@
 
     .theme-switcher {
         position: absolute;
-        right: 23%;
+        right: 17%;
         top: 56%;
         transform: translateY(-50%);
     }
 
     .toggle {
-        cursor: url("../../public/res/pointer.png"), pointer;
+        cursor: url("/pointer.png"), pointer;
         display: inline-block;
         position: relative;
         width: 50px;
@@ -87,5 +87,20 @@
 
     #theme-toggle {
         display: none;
+    }
+    
+    @media (max-width: 900px) {
+        nav{
+            display: none;
+        }
+        .theme-switcher{
+            right: 10px;
+        }
+    }
+
+    @media (max-width: 1300px){
+        .theme-switcher{
+            right: 10px;
+        }
     }
 </style>
