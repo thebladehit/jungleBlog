@@ -16,7 +16,7 @@
     .card {
         background-color: var(--card-background-color);
         color: var(--main-color);
-        width: 400px;
+        width: 100%;
         height: 350px;
         overflow: hidden;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

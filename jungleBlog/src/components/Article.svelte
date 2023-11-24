@@ -211,4 +211,19 @@
     .comment:last-child {
         border-bottom: none;
     }
+
+    @media (max-width: 600px){
+        .content-container {
+            flex-direction: column;
+        }
+
+        .text-section, .image-section {
+            width: 100%;
+        }
+
+        .image-section {
+            order: -1;
+        }
+    }
+
 </style>

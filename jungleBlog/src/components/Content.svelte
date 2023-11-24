@@ -100,4 +100,64 @@
         text-align: center;
         width: 60%;
     }
+
+    @media (max-width: 900px) {
+        .title {
+            display: grid;
+            justify-content: center;
+        }
+
+        .second, .photo, .rightText, .leftParagraph {
+            visibility: hidden;
+        }
+        h1 {
+            font-size: 5vw;
+        }
+        .first{
+            text-align: center;
+        }
+        .leftText {
+            margin-top: -35vw;
+            margin-bottom: -90vw;
+            text-align: center;
+            width: 100%;
+        }
+
+        .leftText p{
+            font-size: 3vw;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .leftText {
+            margin-top: -50vw;
+            margin-bottom: -110vw;
+            text-align: center;
+            width: 100%;
+        }
+    }
+    
+    @media (min-width: 900px) and (max-width: 1300px){
+        .rightText, p.rightParagraph, .second h1{
+            margin-right: 10px;
+        }
+        .leftText, p.leftParagraph, .first h1{
+            margin-left: 10px;
+        }
+        img{
+            margin-top: -100px;
+        }
+    }
+
+    @media (min-width: 750px) and (max-width: 900px){
+        .leftText {
+            margin-bottom: -80vw;
+        }
+    }
 </style>
