@@ -12,7 +12,7 @@
 </script>
 
 <header>
-    <div class="burger-menu" on:click={toggleNav}>
+    <div class="burger-menu {isNavOpen ? 'change' : ''}" on:click={toggleNav}>
         <span></span>
         <span></span>
         <span></span>
@@ -117,6 +117,20 @@
         height: 3px;
         width: 100%;
         background-color: #EAFFE0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .burger-menu.change span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger-menu.change span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    .burger-menu.change span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
     }
 
     @media (max-width: 900px) {
@@ -125,19 +139,29 @@
         }
 
         nav {
-            display: none;
+            display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
             position: absolute;
-            background-color: var(--header-background-color);
+            background-color:  var(--header-background-color);
             top: 60px;
             left: 0;
             width: 100%;
-            gap: 5px;
-            padding: 5px;
+            transform: translateY(-10px);
+            padding: 15px;
+            box-sizing: border-box;
         }
 
         nav.open {
-            display: flex;
+            max-height: 35vh;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         nav a {
