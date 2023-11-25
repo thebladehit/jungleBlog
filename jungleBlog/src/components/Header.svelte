@@ -1,12 +1,23 @@
 <script>
+    let isNavOpen = false;
+
     function toggleTheme(){
         const body = document.body;
         body.dataset.theme = body.dataset.theme === 'dark' ? 'default' : 'dark';
     }
+
+    function toggleNav() {
+        isNavOpen = !isNavOpen;
+    }
 </script>
 
 <header>
-    <nav>
+    <div class="burger-menu" on:click={toggleNav}>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="{isNavOpen ? 'open' : ''}">
         <a href="#articles">Articles</a>
         <a href="#about">About</a>
         <a href="#support">Support</a>
@@ -88,13 +99,52 @@
     #theme-toggle {
         display: none;
     }
-    
+
+    .burger-menu {
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        left: 20px;
+        top: 15px;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+    }
+
+    .burger-menu span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #EAFFE0;
+    }
+
     @media (max-width: 900px) {
-        nav{
-            display: none;
+        .burger-menu {
+            display: flex;
         }
-        .theme-switcher{
-            right: 10px;
+
+        nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            background-color: var(--header-background-color);
+            top: 60px;
+            left: 0;
+            width: 100%;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        nav.open {
+            display: flex;
+        }
+
+        nav a {
+            padding: 5px;
+            text-align: center;
+            margin: 0;
+            border-bottom: 1px solid #EAFFE0;
         }
     }
 
