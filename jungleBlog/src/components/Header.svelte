@@ -1,12 +1,23 @@
 <script>
+    let isNavOpen = false;
+
     function toggleTheme(){
         const body = document.body;
         body.dataset.theme = body.dataset.theme === 'dark' ? 'default' : 'dark';
     }
+
+    function toggleNav() {
+        isNavOpen = !isNavOpen;
+    }
 </script>
 
 <header>
-    <nav>
+    <div class="burger-menu {isNavOpen ? 'change' : ''}" on:click={toggleNav}>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav class="{isNavOpen ? 'open' : ''}">
         <a href="#articles">Articles</a>
         <a href="#about">About</a>
         <a href="#support">Support</a>
@@ -88,13 +99,76 @@
     #theme-toggle {
         display: none;
     }
-    
+
+    .burger-menu {
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        left: 20px;
+        top: 15px;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+    }
+
+    .burger-menu span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: #EAFFE0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .burger-menu.change span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger-menu.change span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    .burger-menu.change span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
     @media (max-width: 900px) {
-        nav{
-            display: none;
+        .burger-menu {
+            display: flex;
         }
-        .theme-switcher{
-            right: 10px;
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transition: max-height 0.6s ease, opacity 0.6s ease, transform 0.6s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            background-color:  var(--header-background-color);
+            top: 60px;
+            left: 0;
+            width: 100%;
+            transform: translateY(-10px);
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        nav.open {
+            max-height: 35vh;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        nav a {
+            padding: 5px;
+            text-align: center;
+            margin: 0;
+            border-bottom: 1px solid #EAFFE0;
         }
     }
 
