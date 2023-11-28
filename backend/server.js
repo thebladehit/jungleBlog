@@ -3,34 +3,39 @@
 require('dotenv').config();
 const http = require('node:http');
 const path = require('node:path');
-const { readFile, isFileExist } = require('./fs/fs.js');
-const { MIME_TYPES } = require('./mimetypes.js');
 const { Logger } = require('./logger/logger.js');
-
 const { PORT } = require('./config/config.js');
-const STATIC_PATH = path.resolve(__dirname, 'static');
+const { staticController } = require('./controllers/static.js');
+const { getStories, getStory } = require('./controllers/story.js');
 
 let logger;
 
+const routing = {
+  '/story': getStories,
+  '/story/.*': getStory
+};
+
+const rxRouting = [];
+for (const key in routing) {
+  if (key.includes('*')) {
+    const rx = new RegExp(key);
+    const route = routing[key];
+    rxRouting.push([ rx, route ]);
+    delete routing[key];
+  }
+}
+
 const server = http.createServer(async (req, res) => {
-  const paths = [STATIC_PATH, req.url];
-  if (req.url === '/') paths.push('index.html');
-  const filePath = path.join(...paths);
-  if (!await isFileExist(filePath)) {
-    res.writeHead(404);
-    return void res.end('Not found');
+  let controller = routing[req.url];
+  if (!controller) {
+    for (const rx of rxRouting) {
+      if (req.url.match(rx[0])) {
+        controller = rx[1];
+      }
+    }
   }
-  try {
-    const data = await readFile(filePath);
-    const ext = path.extname(filePath).substring(1).toLowerCase();
-    const mimeType = MIME_TYPES[ext];
-    res.writeHead(200, { 'Content-Type': mimeType });
-    res.end(data);
-  } catch (err) {
-    res.writeHead(500);
-    res.end('Something went wrong');
-    await logger.log(err);
-  }
+  if (!controller) controller = staticController;
+  controller(req, res, logger);
 });
 
 server.listen(PORT, async () => {
