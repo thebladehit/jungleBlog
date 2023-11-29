@@ -1,21 +1,8 @@
 <script>
-    import {useLocation} from "svelte-routing";
-    import {articles} from "../articles.js";
+    export let id;
+    import { articles } from "../articles.js";
 
-    const location = useLocation()
-
-    let articleId;
-    $: {
-        if ($location) {
-            const pathArray = $location.pathname.split('/');
-            const pathId = pathArray[pathArray.length - 1];
-            articleId = parseInt(pathId);
-        }
-        if ($location.pathname === '/') {
-            window.location.reload()
-        }
-    }
-
+    let articleId = parseInt(id);
     $: article = articles.find(a => a.id === articleId);
 
     let comments = [

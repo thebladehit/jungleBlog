@@ -11,7 +11,9 @@
 
     <Router>
         <Route path = "/" component={Main}/>
-        <Route path = "article/:id" component={Article}/>
+        <Route path="article/:id" let:params>
+            <Article id={params.id} />
+        </Route>
     </Router>
 
     <Footer/>
