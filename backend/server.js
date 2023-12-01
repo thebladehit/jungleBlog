@@ -23,6 +23,15 @@ const routing = {
   '/comment/.*': { GET: getCommentsByStoryId }
 };
 
+const bodyParser = async (req) => {
+  const data = [];
+  for await (const chunk of req) {
+    data.push(chunk);
+  }
+  const stringData = Buffer.concat(data).toString();
+  return JSON.parse(stringData);
+}
+
 const rxRouting = [];
 for (const key in routing) {
   if (key.includes('*')) {
@@ -44,8 +53,9 @@ const server = http.createServer(async (req, res) => {
   }
   if (!methods) staticController(req, res, logger);
   else {
+    const body = await bodyParser(req);
     const controller = methods[req.method];
-    if (controller) return void controller(req, res, logger);
+    if (controller) return void controller(req, res, logger, body);
     res.writeHead(400);
     res.end('No such path');
   }

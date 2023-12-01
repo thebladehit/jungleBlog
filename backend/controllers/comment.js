@@ -33,12 +33,34 @@ const getCommentsByStoryId = async (req, res, logger) => {
   }
 };
 
-const createComment = async (req, res, logger) => {
-
+const createComment = async (req, res, logger, body) => {
+  try {
+    const queryData = [body.story_id, body.username, body.comment_text];
+    const client = await pool.connect();
+    const data = await client.query('INSERT INTO jungleblog.comments(story_id, username, comment_text) VALUES ($1, $2, $3) RETURNING story_id, username, comment_text, created_at', queryData);
+    res.writeHead(201, { 'Content-Type': MIME_TYPES['json'] });
+    res.end(JSON.stringify(data.rows));
+    client.release();
+  } catch (err) {
+    res.writeHead(500);
+    res.end('Something went wrong');
+    await logger.log(err);
+  }
 };
 
-const deleteComment = async (req, res, logger) => {
-
+const deleteComment = async (req, res, logger, body) => {
+  try {
+    const commentId = body.comment_id;
+    const client = await pool.connect();
+    await client.query(`DELETE FROM jungleblog.comments WHERE comment_id = ${commentId}`);
+    res.writeHead(204, { 'Content-Type': MIME_TYPES['json'] });
+    res.end();
+    client.release();
+  } catch (err) {
+    res.writeHead(500);
+    res.end('Something went wrong');
+    await logger.log(err);
+  }
 };
 
 const updateComment = async (req, res, logger) => {
