@@ -18,7 +18,7 @@ const routing = {
     GET: getAllComments,
     POST: createComment,
     DELETE: deleteComment,
-    UPDATE: updateComment
+    PATCH: updateComment
   },
   '/comment/.*': { GET: getCommentsByStoryId }
 };

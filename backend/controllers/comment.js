@@ -37,7 +37,7 @@ const createComment = async (req, res, logger, body) => {
   try {
     const queryData = [body.story_id, body.username, body.comment_text];
     const client = await pool.connect();
-    const data = await client.query('INSERT INTO jungleblog.comments(story_id, username, comment_text) VALUES ($1, $2, $3) RETURNING story_id, username, comment_text, created_at', queryData);
+    const data = await client.query('INSERT INTO jungleblog.comments(story_id, username, comment_text) VALUES ($1, $2, $3) RETURNING username, comment_text, created_at', queryData);
     res.writeHead(201, { 'Content-Type': MIME_TYPES['json'] });
     res.end(JSON.stringify(data.rows));
     client.release();
@@ -63,8 +63,19 @@ const deleteComment = async (req, res, logger, body) => {
   }
 };
 
-const updateComment = async (req, res, logger) => {
-
+const updateComment = async (req, res, logger, body) => {
+  try {
+    const queryData = [body.comment_text, body.username, body.comment_id];
+    const client = await pool.connect();
+    const data = await client.query('UPDATE jungleblog.comments SET comment_text = $1, username = $2 WHERE comment_id=$3 RETURNING comment_id, username, comment_text, created_at', queryData);
+    res.writeHead(201, { 'Content-Type': MIME_TYPES['json'] });
+    res.end(JSON.stringify(data.rows));
+    client.release();
+  } catch (err) {
+    res.writeHead(500);
+    res.end(err.message);
+    await logger.log(err);
+  }
 };
 
 module.exports = { getAllComments, getCommentsByStoryId, createComment, deleteComment, updateComment };
