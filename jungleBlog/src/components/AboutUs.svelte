@@ -29,6 +29,7 @@
         width: 100%;
         height: 85.9vh;
         margin: auto;
+        margin-bottom: -5vh;
     }
 
     .content h1 {
@@ -57,4 +58,26 @@
         max-height: 500px;
         border-radius: 20px;
     }
+
+    @media (max-width: 900px) {
+        .image {
+            display: none;
+        }
+        .content {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .content {
+            font-size: 11px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .content {
+            font-size: 9px;
+        }
+    }
+
 </style>
