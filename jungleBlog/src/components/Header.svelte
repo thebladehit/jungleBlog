@@ -19,7 +19,7 @@
     </div>
     <nav class="{isNavOpen ? 'open' : ''}">
         <a href="#articles">Articles</a>
-        <a href="#about">About</a>
+        <a href="/about">About</a>
         <a href="#support">Support</a>
         <a href="#donate">Donate</a>
     </nav>
