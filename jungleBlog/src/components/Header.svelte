@@ -19,9 +19,9 @@
     </div>
     <nav class="{isNavOpen ? 'open' : ''}">
         <a href="#articles">Articles</a>
-        <a href="#about">About</a>
+        <a href="/about">About</a>
         <a href="#support">Support</a>
-        <a href="#donate">Donate</a>
+        <a href="https://send.monobank.ua/jar/ATcjAVGpYV" target="_blank" rel="noreferrer noopener nofollow">Donate</a>
     </nav>
     <div class="theme-switcher">
         <input on:click={toggleTheme} type="checkbox" id="theme-toggle"/>
