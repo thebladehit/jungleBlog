@@ -5,6 +5,7 @@
     import Main from "./components/Main.svelte";
     import Article from "./components/Article.svelte";
     import AboutUs from "./components/AboutUs.svelte";
+    import Feedback from "./components/Feedback.svelte";
 </script>
 
 <div class="app-container">
@@ -16,6 +17,7 @@
             <Article id={params.id} />
         </Route>
         <Route path="about" component={AboutUs}/>
+        <Route path="feedback" component={Feedback}/>
     </Router>
 
     <Footer/>
