@@ -3,7 +3,9 @@
 
     function toggleTheme(){
         const body = document.body;
-        body.dataset.theme = body.dataset.theme === 'dark' ? 'default' : 'dark';
+        const newTheme = body.dataset.theme === 'dark' ? 'default' : 'dark';
+        body.dataset.theme = newTheme
+        localStorage.setItem('theme', newTheme)
     }
 
     function toggleNav() {
