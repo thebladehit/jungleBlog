@@ -1,9 +1,12 @@
 <script>
     let isNavOpen = false;
+    const isDark = localStorage.getItem('theme')
 
     function toggleTheme(){
         const body = document.body;
-        body.dataset.theme = body.dataset.theme === 'dark' ? 'default' : 'dark';
+        const newTheme = body.dataset.theme === 'dark' ? 'default' : 'dark';
+        body.dataset.theme = newTheme
+        localStorage.setItem('theme', newTheme)
     }
 
     function toggleNav() {
@@ -18,13 +21,17 @@
         <span></span>
     </div>
     <nav class="{isNavOpen ? 'open' : ''}">
-        <a href="#articles">Articles</a>
+        <a href="/">Articles</a>
         <a href="/about">About</a>
         <a href="/feedback">Feedback</a>
         <a href="https://send.monobank.ua/jar/ATcjAVGpYV" target="_blank" rel="noreferrer noopener nofollow">Donate</a>
     </nav>
     <div class="theme-switcher">
-        <input on:click={toggleTheme} type="checkbox" id="theme-toggle"/>
+        {#if isDark === 'dark'}
+            <input on:click={toggleTheme} type="checkbox" id="theme-toggle" checked/>
+        {:else}
+            <input on:click={toggleTheme} type="checkbox" id="theme-toggle"/>
+        {/if}
         <label for="theme-toggle" class="toggle">
             <span class="toggle-handler"></span>
         </label>
