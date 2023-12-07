@@ -28,7 +28,7 @@
             Deserted island, a tranquil stand.<br>
             Whispers echo, waves conspire,<br>
             Solitude's dance, nature's lyre.<br>
-        </p>   
+        </p>
     </div>
     <div class="photo">
         <img src={photo} alt="main img" />

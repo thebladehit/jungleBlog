@@ -9,9 +9,8 @@
 </script>
 
 <div class="app-container">
-    <Header/>
-
     <Router>
+        <Header/>
         <Route path = "/" component={Main}/>
         <Route path="article/:id" let:params>
             <Article id={params.id} />
@@ -19,7 +18,6 @@
         <Route path="about" component={AboutUs}/>
         <Route path="feedback" component={Feedback}/>
     </Router>
-
     <Footer/>
 </div>
 
