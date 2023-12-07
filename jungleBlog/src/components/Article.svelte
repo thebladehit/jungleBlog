@@ -1,6 +1,16 @@
 <script>
     export let id;
     import { articles } from "../articles.js";
+    import { onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
+
+    let showContent = false;
+
+    onMount(() => {
+        setTimeout(() => {
+            showContent = true;
+        }, 100);
+    });
 
     let articleId = parseInt(id);
     $: article = articles.find(a => a.id === articleId);
@@ -26,7 +36,8 @@
 </script>
 
 <main>
-    <div class="content-container">
+    {#if showContent}
+    <div class="content-container" in:fade={{ x: 200, duration: 1000 }} >
         <section class="text-section">
             <h1>{article.title}</h1>
             <p>{article.text}</p>
@@ -35,14 +46,14 @@
             <img src={article.image} alt={article.title} />
         </section>
     </div>
-    <section class="form-section">
+    <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
         <input bind:value={name} placeholder="Name" />
         <textarea bind:value={comment} placeholder="Your comment"></textarea>
         <div class="button-container">
             <button on:click={sendFeedback}>Send</button>
         </div>
     </section>
-    <section class="comments-section">
+    <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
         {#each comments as comment}
             <div class="comment">
                 <h2>{comment.name}</h2>
@@ -51,6 +62,7 @@
             </div>
         {/each}
     </section>
+    {/if}
 </main>
 
 <style>

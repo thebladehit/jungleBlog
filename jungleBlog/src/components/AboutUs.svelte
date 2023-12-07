@@ -1,7 +1,21 @@
- <div class="content">
-     <h1>About My Blog</h1>
+<script>
+    import { onMount } from 'svelte';
+    import {fade} from "svelte/transition";
+
+    let showContent = false;
+
+    onMount(() => {
+        setTimeout(() => {
+            showContent = true;
+        }, 100);
+    });
+</script>
+
+<div class="content">
+    {#if showContent}
+     <h1 in:fade={{duration: 1000}}>About My Blog</h1>
      <div class="text-image-wrapper">
-         <div class="text">
+         <div class="text" in:fade={{duration: 1000}}>
              <p>Hello, my brave readers!</p>
              <p>I'm a beginner in the world of survival, and this is my blog where I share my unique experience of surviving on a deserted island in the jungle.
                 Why am I here? I'm seeking adventure, testing myself, learning skills forgotten by the modern world, and of course, sharing it all with you.</p>
@@ -13,11 +27,13 @@
              <p> So, if you're interested in nature, survival, or just want to feel part of something extraordinary, welcome to my blog. Join my adventure and discover the unknown
             with me!</p>
          </div>
-            <div class="image">
+            <div class="image" in:fade={{duration: 1000}}>
                 <img src="/res/AboutUs.png" alt="aboutUsImg"/>
             </div>
         </div>
+    {/if}
  </div>
+
 
 <style>
     .content {

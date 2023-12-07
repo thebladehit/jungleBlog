@@ -1,7 +1,21 @@
+<script>
+    import { onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
+
+    let showContent = false;
+
+    onMount(() => {
+        setTimeout(() => {
+            showContent = true;
+        }, 100);
+    });
+</script>
+
 <main>
-    <h1>Feedback</h1>
-    <h2>You can ask questions or leave feedback here. We are glad to hear from you.</h2>
-    <section class="form-section">
+    {#if showContent}
+    <h1 in:fade={{duration: 1000 }}>Feedback</h1>
+    <h2 in:fade={{duration: 1000 }}>You can ask questions or leave feedback here. We are glad to hear from you.</h2>
+    <section class="form-section" in:fade={{duration: 1000 }}>
         <input  placeholder="Name" />
         <input  placeholder="Email" />
         <textarea placeholder="Feedback"></textarea>
@@ -9,6 +23,7 @@
             <button >Send</button>
         </div>
     </section>
+    {/if}
 </main>
 
 <style>
