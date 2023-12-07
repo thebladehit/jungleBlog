@@ -1,4 +1,6 @@
 <script>
+    import {Router, Route, Link} from "svelte-routing";
+
     let isNavOpen = false;
     const isDark = localStorage.getItem('theme')
 
@@ -21,10 +23,10 @@
         <span></span>
     </div>
     <nav class="{isNavOpen ? 'open' : ''}">
-        <a href="/">Articles</a>
-        <a href="/about">About</a>
-        <a href="/feedback">Feedback</a>
-        <a href="https://send.monobank.ua/jar/ATcjAVGpYV" target="_blank" rel="noreferrer noopener nofollow">Donate</a>
+        <Link to="/"><span class="header-element">Articles</span></Link>
+        <Link to="about"><span class="header-element">About</span></Link>
+        <Link to="feedback"><span class="header-element">Feedback</span></Link>
+        <a href="https://send.monobank.ua/jar/ATcjAVGpYV" target="_blank" rel="noreferrer noopener nofollow" class = "header-element">Donate</a>
     </nav>
     <div class="theme-switcher">
         {#if isDark === 'dark'}
@@ -58,7 +60,7 @@
         gap: 20px;
     }
 
-    nav a {
+    .header-element{
         color: #EAFFE0;
         text-decoration: none;
         padding: 1.5rem;
@@ -67,7 +69,7 @@
         transition: linear .3s;
     }
 
-    nav a:hover {
+    .header-element:hover {
         color: #d0fabd;
     }
 
