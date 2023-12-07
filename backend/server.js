@@ -29,6 +29,7 @@ const bodyParser = async (req) => {
     data.push(chunk);
   }
   const stringData = Buffer.concat(data).toString();
+  if (!stringData) return;
   return JSON.parse(stringData);
 }
 
