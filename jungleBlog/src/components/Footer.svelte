@@ -16,11 +16,6 @@
         text-align: center;
     }
 
-    footer span {
-        display: inline;
-        white-space: nowrap;
-    }
-
     .footer-break {
         display: none;
     }

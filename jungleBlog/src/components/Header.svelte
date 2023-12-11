@@ -17,7 +17,7 @@
 </script>
 
 <header>
-    <div class="burger-menu {isNavOpen ? 'change' : ''}" on:click={toggleNav}>
+    <div class="burger-menu {isNavOpen ? 'change' : ''}" on:click={toggleNav} role="navigation">
         <span></span>
         <span></span>
         <span></span>
