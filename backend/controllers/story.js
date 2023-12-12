@@ -20,7 +20,10 @@ const getStory = async (req, res, logger) => {
     const splitedUrl = req.url.split('/');
     const storyId = splitedUrl[splitedUrl.length - 1];
     const parsedStoryId = +storyId;
-    if (isNaN(parsedStoryId)) throw new Error(`Invalid story id, id = "${storyId}"`);
+    if (isNaN(parsedStoryId)) {
+      res.writeHead(400);
+      return void res.end(`Invalid story id, id = "${storyId}"`);
+    };
     const client = await pool.connect();
     const data = await client.query(`SELECT story_id, title, content FROM jungleBlog.stories WHERE story_id=${storyId}`);
     res.writeHead(200, { 'Content-Type': MIME_TYPES['json'] });
