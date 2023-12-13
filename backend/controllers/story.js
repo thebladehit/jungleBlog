@@ -4,7 +4,7 @@ const { MIME_TYPES } = require('../mimetypes.js');
 const getStories = async (req, res, logger) => {
   try {
     const client = await pool.connect();
-    const data = await client.query('SELECT story_id, title, content FROM jungleBlog.stories');
+    const data = await client.query('SELECT story_id, title, content FROM jungleBlog.stories ORDER BY story_id');
     res.writeHead(200, { 'Content-Type': MIME_TYPES['json'] });
     res.end(JSON.stringify(data.rows));
     client.release();
