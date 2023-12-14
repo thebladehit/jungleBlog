@@ -1,5 +1,15 @@
 <script>
-    import photo from '/res/sixth.png';
+    import photo from '/res/mainPhoto.png';
+    import photoDark from '/res/mainPhotoDark.png';
+    
+    const isDark = localStorage.getItem('theme')
+    let photoUrl = isDark === 'dark' ? photoDark : photo;
+
+    document.querySelector('.theme-switcher').addEventListener('click', () =>{
+        const isDark = localStorage.getItem('theme')
+        photoUrl = isDark === 'dark' ? photoDark : photo;
+    });    
+
 </script>
 
 <div class="title">
@@ -31,7 +41,7 @@
         </p>
     </div>
     <div class="photo">
-        <img src={photo} alt="main img" />
+        <img src={photoUrl} alt="main img" />
     </div>
     <div class="rightText">
         <p>Jungle whispers, wild and free,<br>
