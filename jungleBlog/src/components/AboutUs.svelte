@@ -45,7 +45,7 @@
         width: 100%;
         height: 85.9vh;
         margin: auto;
-        margin-bottom: -5vh;
+
     }
 
     .content h1 {
@@ -71,7 +71,7 @@
     .image img {
         max-width: 100%;
         height: auto;
-        max-height: 500px;
+        max-height: 600px;
         border-radius: 20px;
     }
 
