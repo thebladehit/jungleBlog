@@ -4,5 +4,6 @@ const DB_PORT = process.env.DB_PORT;
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
+const OPENAI_TOKEN = process.env.OPENAI_TOKEN
 
-module.exports = { PORT, HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD };
+module.exports = { PORT, HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, OPENAI_TOKEN };
