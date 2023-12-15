@@ -1,13 +1,6 @@
 'use strict';
 
-const OpenAI = require('openai');
-const { OPENAI_TOKEN } = require('../config/config.js');
-
-const openai = new OpenAI({
-  apiKey: OPENAI_TOKEN
-});
-
-const generateText = async (model, messages, maxTokens = 2000) => {
+const generateText = async (openai, model, messages, maxTokens = 2000) => {
   try {
     const response = await openai.chat.completions.create({
       model,
@@ -25,7 +18,7 @@ const generateText = async (model, messages, maxTokens = 2000) => {
   }
 };
 
-const genetateImage = async (model, prompt, quantity, size) => {
+const genetateImage = async (openai, model, prompt, quantity, size) => {
   const response = await openai.images.generate({
     model,
     prompt,
