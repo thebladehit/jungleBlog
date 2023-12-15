@@ -88,3 +88,14 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #123512;
 }
+
+:root {
+  --scrollbar-width: calc(100vw - 100%);
+}
+header {
+  margin-right: calc(-1*var(--scrollbar-width));
+}
+
+body, html{
+  overflow-x: hidden;
+}
