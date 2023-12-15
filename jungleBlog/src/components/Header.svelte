@@ -51,6 +51,7 @@
         justify-content: center;
         position: relative;
         font-family: 'Inknut Antiqua', serif;
+        padding-left: 40px;
     }
 
     nav {
@@ -75,7 +76,7 @@
 
     .theme-switcher {
         position: absolute;
-        right: 17%;
+        right: 17.5%;
         top: 56%;
         transform: translateY(-50%);
     }

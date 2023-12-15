@@ -43,7 +43,7 @@
         justify-content: flex-start;
         max-width: 1268px;
         width: 100%;
-        height: 85.9vh;
+        height: 85vh;
         margin: auto;
 
     }
