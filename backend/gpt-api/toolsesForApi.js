@@ -11,6 +11,11 @@ const requestBenchMark = (fn, ...params) => {
   }
 };
 
+const convertFromB64toBuffer = (stringB64) => {
+  return Buffer.from(stringB64, 'base64');
+}
+
 module.exports = {
- requestBenchMark
+ requestBenchMark,
+ convertFromB64toBuffer
 };
