@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS jungleBlog.stories (
   story_id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT,
+  image_url VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
