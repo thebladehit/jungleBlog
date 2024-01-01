@@ -60,6 +60,4 @@ const startGenerateContent = async () => {
   }, milisecondsToStart);
 };
 
-startGenerateContent();
-
 module.exports = { startGenerateContent };
