@@ -63,6 +63,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, async () => {
-  logger = await new Logger(path.resolve(__dirname, 'logs'));
+  logger = await new Logger(path.resolve(__dirname, 'logs', 'server'));
   console.log(`Starting on ${PORT}...`);
 });

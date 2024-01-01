@@ -18,7 +18,7 @@ const universalController = async (req, res, logger, query, code, queryData) => 
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
-    await logger.log(err);
+    await logger.error(err);
   }
 };
 

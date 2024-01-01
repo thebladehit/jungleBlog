@@ -29,7 +29,7 @@ const staticController = async (req, res, logger) => {
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
-    await logger.log(err);
+    await logger.error(err);
   }
 };
 
