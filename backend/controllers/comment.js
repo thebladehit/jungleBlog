@@ -1,5 +1,5 @@
 const { pool } = require('../db/pool.js');
-const { MIME_TYPES } = require('../mimetypes.js');
+const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 
 const isBadId = (url) => {
   const splitedUrl = url.split('/');

@@ -1,5 +1,5 @@
 const path = require('node:path');
-const { MIME_TYPES } = require('../mimetypes.js');
+const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const { readFile, isFileExist } = require('../fs/fs.js');
 
 const STATIC_PATH = path.resolve(__dirname, '..', 'static');
