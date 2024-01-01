@@ -8,6 +8,7 @@ class Logger {
   }
 
   async init() {
+    await createDir(path.join(this.dirName, '..'));
     await createDir(this.dirName);
     await createDir(path.join(this.dirName, 'error'));
     await createDir(path.join(this.dirName, 'logs'));
