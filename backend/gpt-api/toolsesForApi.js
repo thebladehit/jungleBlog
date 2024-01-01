@@ -1,9 +1,9 @@
 'use strict';
 
-const requestBenchMark = (fn, ...params) => {
+const requestBenchMark = async (fn, ...params) => {
   try {
     const startTime = Date.now();
-    const data = fn(...params);
+    const data = await fn(...params);
     const deltaTime = Date.now() - startTime;
     return {data, deltaTime};
   } catch (err) {
