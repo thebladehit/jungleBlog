@@ -3,8 +3,9 @@
 require('dotenv').config();
 const http = require('node:http');
 const path = require('node:path');
-const { Logger } = require('./logger/logger.js');
 const { PORT } = require('./config/config.js');
+const { Logger } = require('./logger/logger.js');
+const { cacher } = require('./cacher/cacherSingleton.js');
 const { staticController } = require('./controllers/static.js');
 const { getStories, getStory } = require('./controllers/story.js');
 const { getAllComments, getCommentsByStoryId, createComment, deleteComment, updateComment } = require('./controllers/comment.js');
@@ -44,6 +45,8 @@ for (const key in routing) {
 }
 
 const server = http.createServer(async (req, res) => {
+  const cache = cacher.getCache(req.url);
+  if (cache) return void res.end(cache);
   let methods = routing[req.url];
   if (!methods) {
     for (const rx of rxRouting) {
