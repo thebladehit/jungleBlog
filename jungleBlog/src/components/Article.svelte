@@ -1,19 +1,16 @@
 <script>
+    import {fade} from 'svelte/transition';
+    import {onMount} from "svelte";
+    import {articlesData} from "../articlesStore.js";
     export let id;
-    import { articles } from "../articles.js";
-    import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
 
     let showContent = false;
 
     onMount(() => {
-        setTimeout(() => {
-            showContent = true;
-        }, 100);
-    });
+        setTimeout(() => showContent = true, 100)
+    })
 
-    let articleId = parseInt(id);
-    $: article = articles.find(a => a.id === articleId);
+    $: article = $articlesData.find(a => a.story_id === parseInt(id));
 
     let comments = [
         { name: 'Ryan', text: 'Lorem ipsum dolor sit amet...' },
@@ -37,15 +34,15 @@
 
 <main>
     {#if showContent}
-    <div class="content-container" in:fade={{ x: 200, duration: 1000 }} >
-        <section class="text-section">
-            <h1>{article.title}</h1>
-            <p>{article.text}</p>
-        </section>
-        <section class="image-section">
-            <img src={article.image} alt={article.title} />
-        </section>
-    </div>
+        <div class="content-container" in:fade={{ x: 200, duration: 1000 }}>
+            <section class="text-section">
+                <h1>{article.title}</h1>
+                <div class="image-section">
+                    <img src="https://plus.unsplash.com/premium_photo-1673288456151-4f7b871863c9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt={article.title} />
+                </div>
+                <p>{article.content}</p>
+            </section>
+        </div>
     <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
         <input bind:value={name} placeholder="Name" />
         <textarea bind:value={comment} placeholder="Your comment"></textarea>
@@ -103,31 +100,34 @@
     }
 
     .content-container {
-        display: flex;
-        justify-content: space-between;
         margin-bottom: 20px;
         background-color: var(--main-background-color);
         border-bottom: 3px solid var(--main-color);
     }
 
-    .text-section, .image-section {
-        width: 50%;
-        padding: 0;
+    .text-section {
+        padding: 20px;
     }
 
-    .text-section{
-        margin-bottom: 10px;
+    .text-section h1 {
+        font-size: 48px;
+        margin-bottom: 20px; /* Додаємо відступ між заголовком та зображенням */
+    }
+
+    .text-section p {
+        white-space: pre-line;
+        margin-top: 20px; /* Додаємо відступ між зображенням та текстом */
     }
 
     .image-section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        float: right; /* Зображення буде спливати праворуч */
+        margin-left: 20px; /* Відступ зліва для обтікання тексту */
+        width: 50%; /* Регулюйте ширину за бажанням */
     }
 
     .image-section img {
         max-width: 100%;
-        max-height: 300px;
+        max-height: 500px;
         border-radius: 8px;
     }
 

@@ -5,7 +5,7 @@
 <div class="card">
     <div class="text-content">
         <h1>{article.title}</h1>
-        <p>{article.description}</p>
+        <p>{article.story_id}</p>
     </div>
     <div class="image-content">
         <img src={article.image} alt={article.title} />
@@ -75,5 +75,4 @@
         line-height: 1.6;
     }
 </style>
-
 
