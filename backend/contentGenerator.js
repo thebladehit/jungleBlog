@@ -2,12 +2,13 @@
 
 require('dotenv').config();
 const path = require('node:path');
-const { writeFile } = require('./fs/fs.js');
+const { writeFile, createDir } = require('./fs/fs.js');
 const OpenAI = require('openai');
 const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY } = require('./config/config.js');
 const storiesTheme = require('./data/thmesForStories.json');
 const themeIndexObj = require('./data/nextThemeIndex.json');
 const { pool } = require('./db/pool.js');
+const { cacher } = require('./cacher/cacherSingleton.js');
 const { requestBenchMark, convertFromB64toBuffer } = require('./gpt-api/toolsesForApi.js');
 const { generateText, genetateImage } = require('./gpt-api/gptApi.js');
 const { Logger } = require('./logger/logger.js');
@@ -42,9 +43,11 @@ const generateStory = async (logger) => {
     const imageUrl = `res/themeImg/${themeIndex + 1}.jpg`;
     const client = await pool.connect();
     const query = 'INSERT INTO jungleBlog.stories(title, content, image_url) VALUES ($1, $2, $3)';
+    await createDir(path.join(__dirname, 'static', 'res', 'themeImg'));
     await writeFile(`./static/res/themeImg/${themeIndex + 1}.jpg`, imageBuffer);
     await writeFile('./data/nextThemeIndex.json', JSON.stringify(themeIndexObj));
     await client.query(query, [theme.title, textBenchMark.data, imageUrl]);
+    cacher.deleteCache('/story');
     client.release();
   } catch (err) {
     await logger.error(err);

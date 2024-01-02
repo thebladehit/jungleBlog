@@ -46,9 +46,9 @@ for (const key in routing) {
 
 const server = http.createServer(async (req, res) => {
   const cache = cacher.getCache(req.url);
-  if (cache) {
+  if (cache && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': cache.mimeType });
-    return void res.end(cache.data)
+    return void res.end(cache.data);
   };
   let methods = routing[req.url];
   if (!methods) {
