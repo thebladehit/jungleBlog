@@ -2,16 +2,22 @@
   import Content from "./Content.svelte";
   import Card from "./Card.svelte";
 
-  import { articles } from "../articles.js";
+  import {articlesData, fetchArticles} from "../articlesStore.js";
 
   import { Router, Route, Link} from "svelte-routing";
+
+  import {onMount} from "svelte";
+
+  onMount(() => {
+    fetchArticles()
+  })
 </script>
 
 <div class="content-wrapper">
   <Content />
   <div class="cards-container">
-    {#each articles as article}
-      <Link to={`article/${article.id}`}>
+    {#each $articlesData as article}
+      <Link to={`article/${article.story_id}`}>
         <Card {article} />
       </Link>
     {/each}
