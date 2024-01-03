@@ -1,16 +1,24 @@
 <script>
     import {fade} from 'svelte/transition';
     import {onMount} from "svelte";
-    import {articlesData} from "../articlesStore.js";
+    import {articlesData, fetchArticles} from "../articlesStore.js";
     export let id;
 
     let showContent = false;
 
-    onMount(() => {
-        setTimeout(() => showContent = true, 100)
-    })
+    let article;
 
-    $: article = $articlesData.find(a => a.story_id === parseInt(id));
+    onMount(async () => {
+        await fetchArticles();
+
+        article = $articlesData.find(a => a.story_id === parseInt(id));
+
+        if (article) {
+            showContent = true;
+        } else {
+            console.log("Article not found!");
+        }
+    });
 
     let comments = [
         { name: 'Ryan', text: 'Lorem ipsum dolor sit amet...' },
