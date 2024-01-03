@@ -1,20 +1,15 @@
 const path = require('node:path');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const { readFile, isFileExist } = require('../fs/fs.js');
+const { cacher } = require('../cacher/cacherSingleton.js');
 
 const STATIC_PATH = path.resolve(__dirname, '..', 'static');
-let eTag = new Date().toISOString();
 
 const staticController = async (req, res, logger) => {
-  if (req.headers['if-none-match']) {
-    res.writeHead(304);
-    return void res.end();
+  if (req.url === '/' || req.url.startsWith('/article')) {
+    req.url = '/index.html';
   }
   const paths = [STATIC_PATH, req.url];
-  if (req.url === '/' || req.url.startsWith('/article')) {
-    paths.pop();
-    paths.push('/index.html');
-  } 
   const filePath = path.join(...paths);
   if (!await isFileExist(filePath)) {
     res.writeHead(404);
@@ -24,8 +19,10 @@ const staticController = async (req, res, logger) => {
     const data = await readFile(filePath);
     const ext = path.extname(filePath).substring(1).toLowerCase();
     const mimeType = MIME_TYPES[ext];
-    res.writeHead(200, { 'Content-Type': mimeType, 'ETag': eTag });
+    res.writeHead(200, { 'Content-Type': mimeType });
     res.end(data);
+    const cache = { data, mimeType }
+    cacher.setCache(req.url, cache);
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
