@@ -5,7 +5,7 @@ const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const getStories = async (req, res, logger) => {
   try {
     const client = await pool.connect();
-    const data = await client.query('SELECT story_id, title, content FROM jungleBlog.stories ORDER BY story_id');
+    const data = await client.query('SELECT story_id, title, content, image_url FROM jungleBlog.stories ORDER BY story_id');
     const resData = JSON.stringify(data.rows);
     const mimeType = MIME_TYPES['json'];
     res.writeHead(200, { 'Content-Type': mimeType });
@@ -30,7 +30,7 @@ const getStory = async (req, res, logger) => {
       return void res.end(`Invalid story id, id = "${storyId}"`);
     };
     const client = await pool.connect();
-    const data = await client.query(`SELECT story_id, title, content FROM jungleBlog.stories WHERE story_id=${storyId}`);
+    const data = await client.query(`SELECT story_id, title, content, image_url FROM jungleBlog.stories WHERE story_id=${storyId}`);
     const resData = JSON.stringify(data.rows);
     const mimeType = MIME_TYPES['json'];
     res.writeHead(200, { 'Content-Type': mimeType });
