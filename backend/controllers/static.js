@@ -6,7 +6,7 @@ const { cacher } = require('../cacher/cacherSingleton.js');
 const STATIC_PATH = path.resolve(__dirname, '..', 'static');
 
 const staticController = async (req, res, logger) => {
-  if (req.url === '/' || req.url.startsWith('/article')) {
+  if (req.url === '/' || req.url.startsWith('/article') || req.url.startsWith('/about') || req.url.startsWith('/feedback')) {
     req.url = '/index.html';
   }
   const paths = [STATIC_PATH, req.url];
