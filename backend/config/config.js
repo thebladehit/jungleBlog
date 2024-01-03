@@ -10,7 +10,7 @@ const GPT_MODEL_IMAGE = 'dall-e-3';
 const TIME_ZONE = 'Europe/Kiev';
 const POSTING_STORY_TIME = 10;
 const IMAGE_QUALITY = '1024x1024';
-const CACHE_LIMIT_MB = 100;
+const CACHE_LIMIT_ITEMS = 40;
 
 module.exports = { 
   PORT,
@@ -25,5 +25,5 @@ module.exports = {
   TIME_ZONE,
   POSTING_STORY_TIME,
   IMAGE_QUALITY,
-  CACHE_LIMIT_MB
+  CACHE_LIMIT_ITEMS
 };
