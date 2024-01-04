@@ -119,25 +119,27 @@
 
     .text-section h1 {
         font-size: 48px;
-        margin-bottom: 20px; /* Додаємо відступ між заголовком та зображенням */
+        margin-bottom: 20px;
     }
 
     .text-section p {
         white-space: pre-line;
-        margin-top: 20px; /* Додаємо відступ між зображенням та текстом */
+        margin-top: 20px;
     }
 
     .image-section {
-        float: right; /* Зображення буде спливати праворуч */
-        margin-left: 20px; /* Відступ зліва для обтікання тексту */
-        width: 50%; /* Регулюйте ширину за бажанням */
+        float: right;
+        margin-left: 10px;
+        padding-left: 50px;
+        width: 40%;
     }
 
     .image-section img {
         max-width: 100%;
-        max-height: 500px;
+        max-height: 400px;
         border-radius: 8px;
     }
+
 
     .form-section, .comments-section {
         padding: 20px;
@@ -230,6 +232,12 @@
 
         .image-section {
             order: -1;
+        }
+
+        .image-section {
+            margin-left: 0;
+            padding-left: 0;
+            width: 50%;
         }
     }
 
