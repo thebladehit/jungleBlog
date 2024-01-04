@@ -99,5 +99,4 @@
     .form-section button:hover {
         background-color: var(--button-hover-color);
     }
-
 </style>
