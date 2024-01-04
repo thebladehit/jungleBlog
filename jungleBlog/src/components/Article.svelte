@@ -21,18 +21,43 @@
     });
 
     let comments = [
-        { name: 'Ryan', text: 'Lorem ipsum dolor sit amet...' },
-        { name: 'Gosling', text: 'Lorem ipsum dolor sit amet...' },
+        { username: 'Ryan', comment_text: 'Lorem ipsum dolor sit amet...' },
+        { username: 'Gosling', comment_text: 'Lorem ipsum dolor sit amet...' },
     ];
 
     let name = '';
     let comment = '';
 
-    function sendFeedback() {
+    async function sendComment() {
         if ( name.trim().length === 0 || comment.trim().length === 0 ){
-            alert('Fill all fields!')
+            alert('Fill all fields!');
         } else {
-            comments = [...comments, { name, text: comment }];
+            const commentData = {
+                story_id: parseInt(id),
+                username: name,
+                comment_text: comment,
+                created_at: Date.now()
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(commentData),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+            } catch (error) {
+                console.error('Error creating comment:', error);
+            }
+
+            console.log(commentData)
+
             name = '';
             comment = '';
         }
@@ -55,14 +80,14 @@
         <input bind:value={name} placeholder="Name" />
         <textarea bind:value={comment} placeholder="Your comment"></textarea>
         <div class="button-container">
-            <button on:click={sendFeedback}>Send</button>
+            <button on:click={sendComment}>Send</button>
         </div>
     </section>
     <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
         {#each comments as comment}
             <div class="comment">
-                <h2>{comment.name}</h2>
-                <p>{comment.text}</p>
+                <h2>{comment.username}</h2>
+                <p>{comment.comment_text}</p>
                 <div class="date">12.11.2023 | 12:36</div>
             </div>
         {/each}
