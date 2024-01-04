@@ -1,10 +1,12 @@
 'use strict';
 
 require('dotenv').config();
+const WebSocket = require('ws');
 const http = require('node:http');
 const path = require('node:path');
 const { PORT } = require('./config/config.js');
 const { Logger } = require('./logger/logger.js');
+const { wsController } = require('./controllers/ws.js');
 const { cacher } = require('./cacher/cacherSingleton.js');
 const { staticController } = require('./controllers/static.js');
 const { getStories, getStory } = require('./controllers/story.js');
@@ -70,5 +72,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, async () => {
   logger = await new Logger(path.resolve(__dirname, 'logs', 'server'));
+  const ws = new WebSocket.Server({ server });
+  wsController(ws, logger);
   console.log(`Starting on ${PORT}...`);
 });
