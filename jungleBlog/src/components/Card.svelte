@@ -5,10 +5,9 @@
 <div class="card">
     <div class="text-content">
         <h1>{article.title}</h1>
-        <p>{article.story_id}</p>
     </div>
     <div class="image-content">
-        <img src={article.image} alt={article.title} />
+        <img src={article.image_url} alt={article.title} />
     </div>
 </div>
 
@@ -65,14 +64,10 @@
     }
 
     .image-content img {
-        max-width: 100%;
+        width: 80%;
         max-height: 200px;
         object-fit: cover;
     }
 
-    p {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
 </style>
 

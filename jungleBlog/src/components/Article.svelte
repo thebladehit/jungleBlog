@@ -46,7 +46,7 @@
             <section class="text-section">
                 <h1>{article.title}</h1>
                 <div class="image-section">
-                    <img src="https://plus.unsplash.com/premium_photo-1673288456151-4f7b871863c9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt={article.title} />
+                    <img src={article.image_url} alt={article.title} />
                 </div>
                 <p>{article.content}</p>
             </section>
@@ -119,25 +119,27 @@
 
     .text-section h1 {
         font-size: 48px;
-        margin-bottom: 20px; /* Додаємо відступ між заголовком та зображенням */
+        margin-bottom: 20px;
     }
 
     .text-section p {
         white-space: pre-line;
-        margin-top: 20px; /* Додаємо відступ між зображенням та текстом */
+        margin-top: 20px;
     }
 
     .image-section {
-        float: right; /* Зображення буде спливати праворуч */
-        margin-left: 20px; /* Відступ зліва для обтікання тексту */
-        width: 50%; /* Регулюйте ширину за бажанням */
+        float: right;
+        margin-left: 10px;
+        padding-left: 50px;
+        width: 40%;
     }
 
     .image-section img {
         max-width: 100%;
-        max-height: 500px;
+        max-height: 400px;
         border-radius: 8px;
     }
+
 
     .form-section, .comments-section {
         padding: 20px;
@@ -230,6 +232,12 @@
 
         .image-section {
             order: -1;
+        }
+
+        .image-section {
+            margin-left: 0;
+            padding-left: 0;
+            width: 50%;
         }
     }
 
