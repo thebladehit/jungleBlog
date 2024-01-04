@@ -2,9 +2,10 @@
 
 require('dotenv').config();
 const path = require('node:path');
+const WebSocket = require('ws');
 const { writeFile, createDir } = require('./fs/fs.js');
 const OpenAI = require('openai');
-const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY } = require('./config/config.js');
+const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY, PORT } = require('./config/config.js');
 const storiesTheme = require('./data/thmesForStories.json');
 const themeIndexObj = require('./data/nextThemeIndex.json');
 const { pool } = require('./db/pool.js');
@@ -23,6 +24,14 @@ const getMilisecondsToHour = (hour, timeZone) => {
   targettTime.setHours(hour, 0, 0, 0);
   targettTime.toLocaleString({ timeZone });
   return targettTime.getTime() - Date.now();
+};
+
+const notifyAboutNewPost = () => {
+  const socket = new WebSocket(`ws://localhost:${PORT}`);
+  socket.on('open', () => {
+    socket.send(JSON.stringify({ msgType: 'newPost' }));
+    socket.close();
+  });
 };
 
 const generateStory = async (logger) => {
@@ -49,6 +58,7 @@ const generateStory = async (logger) => {
     await client.query(query, [theme.title, textBenchMark.data, imageUrl]);
     cacher.deleteCache('/story');
     client.release();
+    notifyAboutNewPost();
   } catch (err) {
     await logger.error(err);
   }
