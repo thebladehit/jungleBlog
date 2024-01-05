@@ -10,6 +10,7 @@
 
     onMount(async () => {
         await fetchArticles();
+        await getCommentsById();
 
         article = $articlesData.find(a => a.story_id === parseInt(id));
 
@@ -20,22 +21,79 @@
         }
     });
 
-    let comments = [
-        { name: 'Ryan', text: 'Lorem ipsum dolor sit amet...' },
-        { name: 'Gosling', text: 'Lorem ipsum dolor sit amet...' },
-    ];
+    let comments = [];
 
     let name = '';
-    let comment = '';
+    let commentText = '';
 
-    function sendFeedback() {
-        if ( name.trim().length === 0 || comment.trim().length === 0 ){
-            alert('Fill all fields!')
+    async function sendComment() {
+        if ( name.trim().length === 0 || commentText.trim().length === 0 ){
+            alert('Fill all fields!');
         } else {
-            comments = [...comments, { name, text: comment }];
+            const commentData = {
+                story_id: parseInt(id),
+                username: name,
+                comment_text: commentText,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(commentData),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const newComment = await response.json();
+
+                comments = [newComment[0], ...comments];
+
+            } catch (error) {
+                console.error('Error creating comment:', error);
+            }
+
             name = '';
-            comment = '';
+            commentText = '';
         }
+    }
+
+    async function getCommentsById(){
+        try {
+            const response = await fetch(`http://localhost:3000/comment/${parseInt(id)}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const commentsById = await response.json();
+
+            comments = [...commentsById];
+
+            return commentsById;
+
+        } catch (error) {
+            console.error('Error getting comment:', error);
+        }
+    }
+
+    function formatLocalDateTime(isoString) {
+        const date = new Date(isoString);
+        return date.toLocaleString(navigator.language, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
     }
 
 </script>
@@ -53,17 +111,17 @@
         </div>
     <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
         <input bind:value={name} placeholder="Name" />
-        <textarea bind:value={comment} placeholder="Your comment"></textarea>
+        <textarea bind:value={commentText} placeholder="Your comment"></textarea>
         <div class="button-container">
-            <button on:click={sendFeedback}>Send</button>
+            <button on:click={sendComment}>Send</button>
         </div>
     </section>
     <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
-        {#each comments as comment}
+        {#each comments as item}
             <div class="comment">
-                <h2>{comment.name}</h2>
-                <p>{comment.text}</p>
-                <div class="date">12.11.2023 | 12:36</div>
+                <h2>{item.username}</h2>
+                <p>{item.comment_text}</p>
+                <div class="date">{formatLocalDateTime(item.created_at)}</div>
             </div>
         {/each}
     </section>
