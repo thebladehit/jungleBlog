@@ -51,8 +51,6 @@
 
                 const newComment = await response.json();
 
-                console.log(newComment[0])
-
                 comments = [newComment[0], ...comments];
 
             } catch (error) {
@@ -75,7 +73,6 @@
             }
 
             const commentsById = await response.json();
-            console.log(commentsById)
 
             comments = [...commentsById];
 
