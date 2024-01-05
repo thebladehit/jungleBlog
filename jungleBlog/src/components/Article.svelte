@@ -10,6 +10,7 @@
 
     onMount(async () => {
         await fetchArticles();
+        await getCommentsById();
 
         article = $articlesData.find(a => a.story_id === parseInt(id));
 
@@ -20,22 +21,19 @@
         }
     });
 
-    let comments = [
-        { username: 'Ryan', comment_text: 'Lorem ipsum dolor sit amet...' },
-        { username: 'Gosling', comment_text: 'Lorem ipsum dolor sit amet...' },
-    ];
+    let comments = [];
 
     let name = '';
-    let comment = '';
+    let commentText = '';
 
     async function sendComment() {
-        if ( name.trim().length === 0 || comment.trim().length === 0 ){
+        if ( name.trim().length === 0 || commentText.trim().length === 0 ){
             alert('Fill all fields!');
         } else {
             const commentData = {
                 story_id: parseInt(id),
                 username: name,
-                comment_text: comment,
+                comment_text: commentText,
                 created_at: Date.now()
             };
 
@@ -52,14 +50,40 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
+                const newComment = await response.json();
+
+                console.log(newComment[0])
+
+                comments = [newComment[0], ...comments];
+
             } catch (error) {
                 console.error('Error creating comment:', error);
             }
 
-            console.log(commentData)
-
             name = '';
-            comment = '';
+            commentText = '';
+        }
+    }
+
+    async function getCommentsById(){
+        try {
+            const response = await fetch(`http://localhost:3000/comment/${parseInt(id)}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const commentsById = await response.json();
+            console.log(commentsById)
+
+            comments = [...commentsById];
+
+            return commentsById;
+
+        } catch (error) {
+            console.error('Error getting comment:', error);
         }
     }
 
@@ -78,16 +102,16 @@
         </div>
     <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
         <input bind:value={name} placeholder="Name" />
-        <textarea bind:value={comment} placeholder="Your comment"></textarea>
+        <textarea bind:value={commentText} placeholder="Your comment"></textarea>
         <div class="button-container">
             <button on:click={sendComment}>Send</button>
         </div>
     </section>
     <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
-        {#each comments as comment}
+        {#each comments as item}
             <div class="comment">
-                <h2>{comment.username}</h2>
-                <p>{comment.comment_text}</p>
+                <h2>{item.username}</h2>
+                <p>{item.comment_text}</p>
                 <div class="date">12.11.2023 | 12:36</div>
             </div>
         {/each}
