@@ -34,7 +34,6 @@
                 story_id: parseInt(id),
                 username: name,
                 comment_text: commentText,
-                created_at: Date.now()
             };
 
             try {
@@ -87,6 +86,19 @@
         }
     }
 
+    function formatLocalDateTime(isoString) {
+        const date = new Date(isoString);
+        return date.toLocaleString(navigator.language, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    }
+
 </script>
 
 <main>
@@ -112,7 +124,7 @@
             <div class="comment">
                 <h2>{item.username}</h2>
                 <p>{item.comment_text}</p>
-                <div class="date">12.11.2023 | 12:36</div>
+                <div class="date">{formatLocalDateTime(item.created_at)}</div>
             </div>
         {/each}
     </section>
