@@ -20,4 +20,4 @@ const script = fs.readFileSync('./db.sql', 'utf-8');
   const result = await client.query(script);
   console.log(result);
   await client.end();
-})()
+})();

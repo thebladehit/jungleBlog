@@ -34,7 +34,7 @@ const bodyParser = async (req) => {
   const stringData = Buffer.concat(data).toString();
   if (!stringData) return;
   return JSON.parse(stringData);
-}
+};
 
 const rxRouting = [];
 for (const key in routing) {
@@ -51,7 +51,7 @@ const server = http.createServer(async (req, res) => {
   if (cache && req.method === 'GET') {
     res.writeHead(200, { 'Content-Type': cache.mimeType });
     return void res.end(cache.data);
-  };
+  }
   let methods = routing[req.url];
   if (!methods) {
     for (const rx of rxRouting) {

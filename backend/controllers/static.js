@@ -21,7 +21,7 @@ const staticController = async (req, res, logger) => {
     const mimeType = MIME_TYPES[ext];
     res.writeHead(200, { 'Content-Type': mimeType });
     res.end(data);
-    const cache = { data, mimeType }
+    const cache = { data, mimeType };
     cacher.setCache(req.url, cache);
   } catch (err) {
     res.writeHead(500);

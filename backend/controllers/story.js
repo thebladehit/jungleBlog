@@ -28,7 +28,7 @@ const getStory = async (req, res, logger) => {
     if (isNaN(parsedStoryId)) {
       res.writeHead(400);
       return void res.end(`Invalid story id, id = "${storyId}"`);
-    };
+    }
     const client = await pool.connect();
     const data = await client.query(`SELECT story_id, title, content, image_url FROM jungleBlog.stories WHERE story_id=${storyId}`);
     const resData = JSON.stringify(data.rows);

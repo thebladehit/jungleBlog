@@ -1,12 +1,8 @@
 const fsp = require('node:fs').promises;
 
 const readFile = async (path) => {
-  try {
-    const data = await fsp.readFile(path);
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const data = await fsp.readFile(path);
+  return data;
 };
 
 const isFileExist = async (filePath) => {
@@ -19,28 +15,16 @@ const isFileExist = async (filePath) => {
 };
 
 const appendFile = async (path, data) => {
-  try {
-    await fsp.appendFile(path, data);
-  } catch (err) {
-    throw err;
-  }
+  await fsp.appendFile(path, data);
 };
 
 const writeFile = async (path, data) => {
-  try {
-    await fsp.writeFile(path, data);
-  } catch (err) {
-    throw err;
-  }
+  await fsp.writeFile(path, data);
 };
 
 const createDir = async (dirPath) => {
-  try {
-    if (!await isFileExist(dirPath)) {
-      await fsp.mkdir(dirPath);
-    }
-  } catch (err) {
-    throw err;
+  if (!await isFileExist(dirPath)) {
+    await fsp.mkdir(dirPath);
   }
 };
 

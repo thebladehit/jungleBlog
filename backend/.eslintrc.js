@@ -38,5 +38,10 @@ module.exports = {
       'error',
       'always'
     ]
+  },
+  'globals': {
+    'process': true,
+    '__dirname': true,
+    'Buffer': true
   }
 };

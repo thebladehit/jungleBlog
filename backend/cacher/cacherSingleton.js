@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const { Cacher } = require('./cacher.js');
 const { CACHE_LIMIT_ITEMS } = require('../config/config.js');
