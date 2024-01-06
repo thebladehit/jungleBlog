@@ -9,6 +9,5 @@ export async function fetchArticles(){
         throw new Error(`HTTP error! ${response.status}`)
     }
     const data = await response.json();
-    console.log(data)
     articlesData.set(data);
 }

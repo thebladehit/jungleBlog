@@ -4,11 +4,22 @@
     import {articlesData, fetchArticles} from "../articlesStore.js";
     export let id;
 
-    let showContent = false;
-
     let article;
+    let showContent = false;
+    let comments = [];
+    let name = '';
+    let commentText = '';
+
+    const socket = new WebSocket("ws://localhost:3000")
 
     onMount(async () => {
+        socket.addEventListener("message", (msg) =>{
+            msg = JSON.parse(msg.data)
+            if (msg.msgType === "reloadComments" && msg.data.storyId === id){
+                getCommentsById()
+            }
+        })
+
         await fetchArticles();
         await getCommentsById();
 
@@ -20,11 +31,6 @@
             console.log("Article not found!");
         }
     });
-
-    let comments = [];
-
-    let name = '';
-    let commentText = '';
 
     async function sendComment() {
         if ( name.trim().length === 0 || commentText.trim().length === 0 ){
@@ -49,9 +55,8 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                const newComment = await response.json();
 
-                comments = [newComment[0], ...comments];
+                socket.send(JSON.stringify({ msgType: 'newComment', data: { storyId: id }}))
 
             } catch (error) {
                 console.error('Error creating comment:', error);
@@ -75,8 +80,6 @@
             const commentsById = await response.json();
 
             comments = [...commentsById];
-
-            return commentsById;
 
         } catch (error) {
             console.error('Error getting comment:', error);
