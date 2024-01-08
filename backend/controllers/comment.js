@@ -1,6 +1,7 @@
 const { pool } = require('../db/pool.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
+const { HOST } = require('../config/config.js');
 
 const isBadId = (id) => isNaN(id);
 
@@ -9,6 +10,8 @@ const getStoryIdFromUrl = (url) => {
   const storyId = splitedUrl[splitedUrl.length - 1];
   return +storyId;
 };
+
+const getParamsFromUrl = (url) => new URL(url, `http://${HOST}`);
 
 const universalController = async (req, res, logger, query, code, queryData) => {
   try {
@@ -39,12 +42,17 @@ const getAllComments = async (req, res, logger) => {
 };
 
 const getCommentsByStoryId = async (req, res, logger) => {
-  const storyId = getStoryIdFromUrl(req.url);
+  const urlParams = getParamsFromUrl(req.url);
+  const storyId = getStoryIdFromUrl(urlParams.pathname);
   if (isBadId(storyId)) {
     res.writeHead(400);
     return res.end(`Invalid story id in getting comments, id = "${storyId}"`);
   }
-  const query = `SELECT comment_id, username, comment_text, created_at FROM jungleBlog.comments WHERE story_id=${storyId} ORDER BY created_at DESC`;
+  const starPos = +urlParams.searchParams.get('start');
+  const endPos = +urlParams.searchParams.get('end');
+  let query = `SELECT comment_id, username, comment_text, created_at FROM jungleBlog.comments WHERE story_id=${storyId} ORDER BY created_at DESC`;
+  if (!!starPos && !isNaN(starPos)) query += ` OFFSET ${starPos}`;
+  if (!!endPos && !isNaN(endPos)) query += ` LIMIT ${endPos - starPos}`;
   await universalController(req, res, logger, query);
 };
 
