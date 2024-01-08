@@ -26,14 +26,15 @@
             });
 
             if (response.ok) {
-                console.log('Фідбек відправлено');
+                console.log('Feedback was sent!');
             }
         } catch (error) {
-            console.error('Помилка при відправці фідбеку:', error);
+            console.error('Error while sending feedback!', error);
         }
 
         name = '';
         feedback = '';
+
         alert('Thank you for your feedback!')
     }
 
