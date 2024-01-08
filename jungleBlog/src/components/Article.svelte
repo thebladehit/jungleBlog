@@ -30,6 +30,11 @@
         } else {
             console.log("Article not found!");
         }
+
+        let defaultName = localStorage.getItem('name') || ''
+        name = defaultName
+
+        console.log(defaultName)
     });
 
     async function sendComment() {
@@ -62,7 +67,8 @@
                 console.error('Error creating comment:', error);
             }
 
-            name = '';
+            localStorage.setItem('name', name)
+
             commentText = '';
         }
     }
