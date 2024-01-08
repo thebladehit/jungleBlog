@@ -3,12 +3,40 @@
     import { fade } from 'svelte/transition';
 
     let showContent = false;
+    let name = '';
+    let feedback = '';
 
     onMount(() => {
         setTimeout(() => {
             showContent = true;
         }, 100);
     });
+
+    async function sendFeedback() {
+        let googleFormUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeyrZwbJHGNH6ApIjzNan01331WTHfUpeBrNRlTVyGo5mMCHQ/formResponse';
+        let formData = new FormData();
+        formData.append('entry.1405310170', name);
+        formData.append('entry.228219932', feedback);
+
+        try {
+            let response = await fetch(googleFormUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            });
+
+            if (response.ok) {
+                console.log('Фідбек відправлено');
+            }
+        } catch (error) {
+            console.error('Помилка при відправці фідбеку:', error);
+        }
+
+        name = '';
+        feedback = '';
+        alert('Thank you for your feedback!')
+    }
+
 </script>
 
 <main>
@@ -16,11 +44,10 @@
     <h1 in:fade={{duration: 1000 }}>Feedback</h1>
     <h2 in:fade={{duration: 1000 }}>You can ask questions or leave feedback here. We are glad to hear from you.</h2>
     <section class="form-section" in:fade={{duration: 1000 }}>
-        <input  placeholder="Name" />
-        <input  placeholder="Email" />
-        <textarea placeholder="Feedback"></textarea>
+        <input bind:value={name} placeholder="Name" />
+        <textarea bind:value={feedback} placeholder="Feedback"></textarea>
         <div class="button-container">
-            <button >Send</button>
+            <button on:click={sendFeedback}>Send</button>
         </div>
     </section>
     {/if}
@@ -39,7 +66,6 @@
         background-color: var(--main-background-color);
         max-width: 1268px;
         margin: auto;
-
         padding: 20px;
     }
 
