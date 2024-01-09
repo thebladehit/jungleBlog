@@ -18,10 +18,6 @@ body {
   min-height: 100vh;
 }
 
-#app {
-  text-align: center;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
