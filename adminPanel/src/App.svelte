@@ -1,3 +1,7 @@
+<script>
+  import Navigation from "./components/Navigation.svelte";
+</script>
+
 <div class="app-caontainer">
-  some data
+  <Navigation />
 </div>
