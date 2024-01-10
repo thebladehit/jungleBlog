@@ -4,18 +4,19 @@
     import {articlesData, fetchArticles} from "../articlesStore.js";
     export let id;
 
+    let url = import.meta.env.VITE_SERVER_URL
     let article;
     let showContent = false;
     let comments = [];
     let name = '';
     let commentText = '';
 
-    const socket = new WebSocket("ws://localhost:3000")
+    const socket = new WebSocket(`ws://${url}`)
 
     onMount(async () => {
-        socket.addEventListener("message", (msg) =>{
+        socket.addEventListener("message", (msg) => {
             msg = JSON.parse(msg.data)
-            if (msg.msgType === "reloadComments" && msg.data.storyId === id){
+            if (msg.msgType === "reloadComments" && +msg.data.storyId === +id) {
                 getCommentsById()
             }
         })
@@ -31,14 +32,11 @@
             console.log("Article not found!");
         }
 
-        let defaultName = localStorage.getItem('name') || ''
-        name = defaultName
-
-        console.log(defaultName)
+        name = localStorage.getItem('name') || ''
     });
 
     async function sendComment() {
-        if ( name.trim().length === 0 || commentText.trim().length === 0 ){
+        if (name.trim().length === 0 || commentText.trim().length === 0) {
             alert('Fill all fields!');
         } else {
             const commentData = {
@@ -48,7 +46,7 @@
             };
 
             try {
-                const response = await fetch('http://localhost:3000/comment', {
+                const response = await fetch(`http://${url}/comment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -61,7 +59,7 @@
                 }
 
 
-                socket.send(JSON.stringify({ msgType: 'newComment', data: { storyId: id }}))
+                socket.send(JSON.stringify({msgType: 'newComment', data: {storyId: id}}))
 
             } catch (error) {
                 console.error('Error creating comment:', error);
@@ -73,9 +71,9 @@
         }
     }
 
-    async function getCommentsById(){
+    async function getCommentsById() {
         try {
-            const response = await fetch(`http://localhost:3000/comment/${parseInt(id)}`, {
+            const response = await fetch(`http://${url}/comment/${parseInt(id)}`, {
                 method: 'GET',
             });
 
@@ -118,22 +116,22 @@
                 <p>{article.content}</p>
             </section>
         </div>
-    <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
-        <input bind:value={name} placeholder="Name" />
-        <textarea bind:value={commentText} placeholder="Your comment"></textarea>
-        <div class="button-container">
-            <button on:click={sendComment}>Send</button>
-        </div>
-    </section>
-    <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
-        {#each comments as item}
-            <div class="comment">
-                <h2>{item.username}</h2>
-                <p>{item.comment_text}</p>
-                <div class="date">{formatLocalDateTime(item.created_at)}</div>
+        <section class="form-section" in:fade={{ x: 200, duration: 1000 }}>
+            <input bind:value={name} placeholder="Name" />
+            <textarea bind:value={commentText} placeholder="Your comment"></textarea>
+            <div class="button-container">
+                <button on:click={sendComment}>Send</button>
             </div>
-        {/each}
-    </section>
+        </section>
+        <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
+            {#each comments as item}
+                <div class="comment">
+                    <h2>{item.username}</h2>
+                    <p>{item.comment_text}</p>
+                    <div class="date">{formatLocalDateTime(item.created_at)}</div>
+                </div>
+            {/each}
+        </section>
     {/if}
 </main>
 
@@ -218,7 +216,7 @@
         background-color: var(--comments-background);
     }
 
-    .form-section{
+    .form-section {
         background-color: var(--main-background-color);
     }
 
@@ -288,7 +286,7 @@
         border-bottom: none;
     }
 
-    @media (max-width: 600px){
+    @media (max-width: 600px) {
         .content-container {
             flex-direction: column;
         }
