@@ -32,7 +32,7 @@
 <div class="comment">
   <div class="info">
     <p>Name: <span class="bold">{commentData.username}</span></p>
-    <!-- <p>Story id: {commentData.story_id}</p> TODO -->
+    <p>Story id: <span class="bold">{commentData.story_id}</span></p>
     <p>Text: <span class="bold">{commentData.comment_text}</span></p>
   </div>
   <button on:click={deleteComment}>DELETE</button>
