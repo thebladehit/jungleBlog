@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export const data = writable();
+export const commentsData = writable();
 
 export const fetchComments = async () => {
   const response = await fetch('http://' + import.meta.env.VITE_HOST + '/comment', { method: 'GET' });

@@ -1,7 +1,7 @@
 <script>
   import Comment from "./Comment.svelte";
   import { onMount } from "svelte";
-  import { data, fetchComments } from "../store";
+  import { commentsData, fetchComments } from "../store";
 
   export let socket;
 
@@ -10,7 +10,7 @@
   };
 
   onMount(async () => {
-    data.set(await fetchComments());
+    commentsData.set(await fetchComments());
   });
 </script>
 
@@ -19,9 +19,9 @@
     comments
   </div>
 
-  {#if $data}
+  {#if $commentsData}
     <div class="content">
-      {#each $data as item (item.comment_id)}
+      {#each $commentsData as item (item.comment_id)}
         <Comment commentData={item} sendDeleteComment={sendDeleteComment}/>
       {/each}
     </div>
