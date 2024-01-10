@@ -1,11 +1,17 @@
 <script>
-    import Comment from "./Comment.svelte";
+  import Comment from "./Comment.svelte";
+  import { onMount } from "svelte";
+  import { data, fetchComments } from "../store";
 
-  const fetchComments = async () => {
-    const response = await fetch(import.meta.env.VITE_HOST + '/comment', { method: 'GET' });
-    if (!response.ok) throw new Error('Network error');
-    return await response.json();
+  export let socket;
+
+  const sendDeleteComment = (id) => {
+    socket.send(JSON.stringify({ msgType: 'newComment', data: { storyId: id } }));
   };
+
+  onMount(async () => {
+    data.set(await fetchComments());
+  });
 </script>
 
 <div class="container">
@@ -13,17 +19,16 @@
     comments
   </div>
 
-  {#await fetchComments()}
-    <p>Loading...</p>
-  {:then data}
+  {#if $data}
     <div class="content">
-      {#each data as item (item.comment_id)}
-        <Comment commentData={item} />
+      {#each $data as item (item.comment_id)}
+        <Comment commentData={item} sendDeleteComment={sendDeleteComment}/>
       {/each}
     </div>
-  {:catch err}
-    <p>Error: {err.message}</p>
-  {/await}
+  {:else}
+    <p>Loading...</p>
+  {/if}
+
 </div>
 
 <style>
