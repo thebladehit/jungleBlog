@@ -5,7 +5,7 @@ const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const getStories = async (req, res, logger) => {
   try {
     const client = await pool.connect();
-    const data = await client.query('SELECT story_id, title, content, image_url FROM jungleBlog.stories ORDER BY story_id');
+    const data = await client.query('SELECT story_id, title, content, image_url, created_at FROM jungleBlog.stories ORDER BY story_id');
     const resData = JSON.stringify(data.rows);
     const mimeType = MIME_TYPES['json'];
     res.writeHead(200, { 'Content-Type': mimeType });
@@ -45,4 +45,27 @@ const getStory = async (req, res, logger) => {
   }
 };
 
-module.exports = { getStories, getStory };
+const updateStory = async (req, res, logger, body) => {
+  try {
+    const storyId = body.story_id;
+    if (isNaN(+storyId)) {
+      res.writeHead(400);
+      return void res.end(`Invalid story id, id = "${storyId}"`);
+    }
+    const client = await pool.connect();
+    const data = await client.query(`UPDATE jungleBlog.stories SET content = $1 WHERE story_id = ${storyId}`, [body.content]);
+    const resData = JSON.stringify(data.rows);
+    const mimeType = MIME_TYPES['json'];
+    res.writeHead(200, { 'Content-Type': mimeType });
+    res.end(resData);
+    client.release();
+    cacher.deleteCache(`${req.url}/${storyId}`);
+    cacher.deleteCache(req.url);
+  } catch (err) {
+    res.writeHead(500);
+    res.end('Something went wrong');
+    await logger.error(err);
+  }
+};
+
+module.exports = { getStories, getStory, updateStory };

@@ -34,7 +34,7 @@ const universalController = async (req, res, logger, query, code, queryData) => 
 };
 
 const getAllComments = async (req, res, logger) => {
-  const query = 'SELECT comment_id, username, comment_text, created_at FROM jungleBlog.comments ORDER BY created_at';
+  const query = 'SELECT comment_id, story_id, username, comment_text, created_at FROM jungleBlog.comments ORDER BY created_at';
   await universalController(req, res, logger, query);
 };
 
