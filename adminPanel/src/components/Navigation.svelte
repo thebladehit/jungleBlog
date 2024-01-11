@@ -3,7 +3,7 @@
   import Comments from "./Comments.svelte";
   import Stories from "./Stories.svelte";
   import { onMount } from "svelte";
-  import { commentsData, fetchComments, fetchStories, storiesData } from "../store";
+  import { commentsData, feedbacksData, fetchComments, fetchFeedbacks, fetchStories, storiesData } from "../store";
 
   let socket;
   $: curComponent = Comments;
@@ -15,6 +15,7 @@
   onMount(async () => {
     commentsData.set(await fetchComments());
     storiesData.set(await fetchStories());
+    feedbacksData.set(await fetchFeedbacks());
 
     socket = new WebSocket('ws://' + import.meta.env.VITE_HOST);
     socket.addEventListener('message',async (msg) => {
