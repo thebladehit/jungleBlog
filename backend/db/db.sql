@@ -17,3 +17,10 @@ CREATE TABLE IF NOT EXISTS jungleBlog.comments (
   comment_text TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS jungleBlog.feedbacks (
+  feedback_id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  text VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
