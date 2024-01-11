@@ -3,7 +3,7 @@
   import Comments from "./Comments.svelte";
   import Stories from "./Stories.svelte";
   import { onMount } from "svelte";
-  import { commentsData, fetchComments } from "../store";
+  import { commentsData, fetchComments, fetchStories, storiesData } from "../store";
 
   let socket;
   $: curComponent = Comments;
@@ -14,11 +14,15 @@
 
   onMount(async () => {
     commentsData.set(await fetchComments());
+    storiesData.set(await fetchStories());
+
     socket = new WebSocket('ws://' + import.meta.env.VITE_HOST);
     socket.addEventListener('message',async (msg) => {
       const msgData = JSON.parse(msg.data);
-      if (msgData.msgType = 'reloadComments') {
+      if (msgData.msgType === 'reloadComments') {
         commentsData.set(await fetchComments());
+      } else if (msgData.msgType === 'reloadPosts') {
+        storiesData.set(await fetchStories());
       }
     });
   });
