@@ -12,7 +12,8 @@
   const setFeedback = () => curComponent = Feedbacks;
   const setStory = () => curComponent = Stories;
 
-  onMount(() => {
+  onMount(async () => {
+    commentsData.set(await fetchComments());
     socket = new WebSocket('ws://' + import.meta.env.VITE_HOST);
     socket.addEventListener('message',async (msg) => {
       const msgData = JSON.parse(msg.data);
