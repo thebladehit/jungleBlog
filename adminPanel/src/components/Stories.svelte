@@ -13,15 +13,15 @@
   <div class="info">
     stories
   </div>
-  <div class="content">
-    {#if storiesData}
+  {#if storiesData}
+    <div class="content">
       {#each $storiesData as item (item.story_id)}
         <Story storyData={item} sendUpdateStory={sendUpdateStory} />
       {/each}
-    {:else}
-      <p>Loading...</p>
-    {/if}
-  </div>
+    </div>
+  {:else}
+    <p>Loading...</p>
+  {/if}
 </div>
 
 <style>
