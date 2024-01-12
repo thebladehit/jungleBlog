@@ -1,16 +1,36 @@
 <script>
   import Content from "./Content.svelte";
   import Card from "./Card.svelte";
+  import { articlesData, fetchArticles } from "../articlesStore.js";
+  import { websocket } from '../websocketStore.js';
+  import { Link } from "svelte-routing";
+  import { onMount, onDestroy } from "svelte";
 
-  import {articlesData, fetchArticles} from "../articlesStore.js";
+  let socket;
 
-  import { Router, Route, Link} from "svelte-routing";
-
-  import {onMount} from "svelte";
+  const messageHandler = (msg) => {
+    msg = JSON.parse(msg.data);
+    if (msg.msgType === "reloadPosts") {
+      fetchArticles();
+    }
+  };
 
   onMount(() => {
-    fetchArticles()
-  })
+    websocket.subscribe(ws => {
+      socket = ws;
+      if (socket) {
+        socket.addEventListener("message", messageHandler);
+      }
+    });
+
+    fetchArticles();
+  });
+
+  onDestroy(() => {
+    if (socket) {
+      socket.removeEventListener("message", messageHandler);
+    }
+  });
 </script>
 
 <div class="content-wrapper">

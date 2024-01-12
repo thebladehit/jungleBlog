@@ -1,25 +1,31 @@
 <script>
-    import {fade} from 'svelte/transition';
-    import {onMount} from "svelte";
-    import {articlesData, fetchArticles} from "../articlesStore.js";
+    import { fade } from 'svelte/transition';
+    import { onMount} from "svelte";
+    import { articlesData, fetchArticles } from "../articlesStore.js";
+    import { websocket } from '../websocketStore.js';
     export let id;
-
-    let url = import.meta.env.VITE_SERVER_URL
+    let url = import.meta.env.VITE_SERVER_URL;
     let article;
     let showContent = false;
     let comments = [];
     let name = '';
     let commentText = '';
+    let socket;
 
-    const socket = new WebSocket(`ws://${url}`)
+    const messageHandler = (msg) => {
+        msg = JSON.parse(msg.data);
+        if (msg.msgType === "reloadComments" && +msg.data.storyId === +id) {
+            getCommentsById();
+        }
+    };
 
     onMount(async () => {
-        socket.addEventListener("message", (msg) => {
-            msg = JSON.parse(msg.data)
-            if (msg.msgType === "reloadComments" && +msg.data.storyId === +id) {
-                getCommentsById()
+        const unsubscribe = websocket.subscribe(ws => {
+            socket = ws;
+            if (socket) {
+                socket.addEventListener("message", messageHandler);
             }
-        })
+        });
 
         await fetchArticles();
         await getCommentsById();
@@ -32,7 +38,14 @@
             console.log("Article not found!");
         }
 
-        name = localStorage.getItem('name') || ''
+        name = localStorage.getItem('name') || '';
+
+        return () => {
+            if (socket) {
+                socket.removeEventListener("message", messageHandler);
+            }
+            unsubscribe();
+        };
     });
 
     async function sendComment() {
@@ -58,15 +71,15 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-
-                socket.send(JSON.stringify({msgType: 'newComment', data: {storyId: id}}))
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ msgType: 'newComment', data: { storyId: id } }));
+                }
 
             } catch (error) {
                 console.error('Error creating comment:', error);
             }
 
-            localStorage.setItem('name', name)
-
+            localStorage.setItem('name', name);
             commentText = '';
         }
     }
