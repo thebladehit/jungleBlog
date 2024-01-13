@@ -10,7 +10,7 @@ const { wsController } = require('./controllers/ws.js');
 const { cacher } = require('./cacher/cacherSingleton.js');
 const { staticController } = require('./controllers/static.js');
 const { getStories, getStory, updateStory } = require('./controllers/story.js');
-const { getAllComments, getCommentsByStoryId, createComment, deleteComment, updateComment } = require('./controllers/comment.js');
+const { getAllComments, getCommentsByStoryId, createComment, deleteComment } = require('./controllers/comment.js');
 const { getFeedbacks, createFeedback } = require('./controllers/feedback.js');
 
 let logger;
@@ -24,8 +24,7 @@ const routing = {
   '/comment': { 
     GET: getAllComments,
     POST: createComment,
-    DELETE: deleteComment,
-    PATCH: updateComment
+    DELETE: deleteComment
   },
   '/comment/.*': { GET: getCommentsByStoryId },
   '/feedbacks': {
