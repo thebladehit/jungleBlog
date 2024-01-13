@@ -17,10 +17,15 @@ const universalController = async (req, res, logger, query, code, queryData) => 
   try {
     const client = await pool.connect();
     const data = await client.query(query, queryData);
+    if (req.method === 'DELETE' && data.rows.length === 0) {
+      res.writeHead(400);
+      return void res.end('Bad request');
+    }
     const resData = JSON.stringify(data.rows);
     const mimeType = MIME_TYPES['json'];
     res.writeHead(code ? code : 200, { 'Content-Type': mimeType });
     res.end(resData);
+    client.release();
     if (req.method === 'GET') {
       const cache = { data: resData, mimeType };
       cacher.setCache(req.url, cache);
@@ -28,14 +33,13 @@ const universalController = async (req, res, logger, query, code, queryData) => 
       cacher.deleteCache(`${req.url}/${data.rows[0].story_id}`);
       cacher.deleteCache(req.url);
     }
-    client.release();
   } catch (err) {
-    console.log(err);
     res.writeHead(500);
     res.end('Something went wrong');
     await logger.error(err);
   }
 };
+
 
 const getAllComments = async (req, res, logger) => {
   const query = 'SELECT comment_id, story_id, username, comment_text, created_at FROM jungleBlog.comments ORDER BY created_at';
