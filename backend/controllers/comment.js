@@ -30,6 +30,7 @@ const universalController = async (req, res, logger, query, code, queryData) => 
     }
     client.release();
   } catch (err) {
+    console.log(err);
     res.writeHead(500);
     res.end('Something went wrong');
     await logger.error(err);
@@ -77,15 +78,4 @@ const deleteComment = async (req, res, logger, body) => {
   await universalController(req, res, logger, query, 204);
 };
 
-const updateComment = async (req, res, logger, body) => {
-  const commentId = body.comment_id;
-  if (isBadId(commentId)) {
-    res.writeHead(400);
-    return res.end(`Invalid comment id, id = "${commentId}"`);
-  }
-  const queryData = [body.comment_text, body.username, commentId];
-  const query = 'UPDATE jungleblog.comments SET comment_text = $1, username = $2 WHERE comment_id=$3 RETURNING comment_id, username, comment_text, created_at, story_id';
-  universalController(req, res, logger, query, null, queryData);
-};
-
-module.exports = { getAllComments, getCommentsByStoryId, createComment, deleteComment, updateComment };
+module.exports = { getAllComments, getCommentsByStoryId, createComment, deleteComment };
