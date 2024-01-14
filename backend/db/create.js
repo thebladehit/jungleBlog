@@ -1,8 +1,8 @@
 'use strict';
 
-require('dotenv').config({ path: '../.env' });
 const fs = require('node:fs');
 const { Client } = require('pg');
+require('dotenv').config({ path: '../.env' });
 const { HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = require('../config/config.js');
 
 const script = fs.readFileSync('./db.sql', 'utf-8');
