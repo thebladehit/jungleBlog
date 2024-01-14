@@ -1,3 +1,5 @@
+'use strict';
+
 const { RENEW_TOKEN_TIME, ADMIN_LOGIN, ADMIN_PASS } = require('../config/config');
 
 const generateToken = () => {
@@ -12,7 +14,7 @@ setInterval(() => {
 
 const isUserLogined = (cookies) => cookies.loginToken && +cookies.loginToken === token;
 
-const loginUser = (req, res, logger, body) => {
+const loginUser = async (req, res, logger, body) => {
   try {
     if (body.login === ADMIN_LOGIN && body.password === ADMIN_PASS) {
       res.setHeader('Set-Cookie', `loginToken=${token}; Secure; HttpOnly`);
@@ -26,7 +28,7 @@ const loginUser = (req, res, logger, body) => {
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
-    logger.err(err);
+    await logger.err(err);
   }
 };
 
