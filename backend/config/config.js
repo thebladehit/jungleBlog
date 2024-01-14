@@ -11,6 +11,9 @@ const TIME_ZONE = 'Europe/Kiev';
 const POSTING_STORY_TIME = 10;
 const IMAGE_QUALITY = '1024x1024';
 const CACHE_LIMIT_ITEMS = 40;
+const RENEW_TOKEN_TIME = 3600000;
+const ADMIN_LOGIN = process.env.ADMIN_LOGIN;
+const ADMIN_PASS = process.env.ADMIN_PASS;
 
 module.exports = { 
   PORT,
@@ -25,5 +28,8 @@ module.exports = {
   TIME_ZONE,
   POSTING_STORY_TIME,
   IMAGE_QUALITY,
-  CACHE_LIMIT_ITEMS
+  CACHE_LIMIT_ITEMS,
+  RENEW_TOKEN_TIME,
+  ADMIN_LOGIN,
+  ADMIN_PASS
 };

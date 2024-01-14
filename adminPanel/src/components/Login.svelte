@@ -1,8 +1,12 @@
 <script>
+  export let handleLogin;
+
   let login = '';
   let password = '';
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    await handleLogin(login, password);
+  };
 </script>
 
 <div class="form">
