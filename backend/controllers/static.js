@@ -14,7 +14,7 @@ const pathes = {
 };
 
 const staticController = async (req, res, logger) => {
-  req.url = pathes[req.url] ? pathes[req.url] : req.url;
+  req.url = pathes[req.url] ? pathes[req.url] : req.url.startsWith('/article') ? pathes['/article'] : req.url;
   const paths = [STATIC_PATH, req.url];
   const filePath = path.join(...paths);
   if (!await isFileExist(filePath)) {
