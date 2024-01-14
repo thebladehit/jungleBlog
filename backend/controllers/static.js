@@ -5,10 +5,16 @@ const { cacher } = require('../cacher/cacherSingleton.js');
 
 const STATIC_PATH = path.resolve(__dirname, '..', 'static');
 
+const pathes = {
+  '/': '/index.html',
+  '/article': '/index.html',
+  '/about': '/index.html',
+  '/feedback': '/index.html',
+  '/adminPanel': '/adminPanel.html'
+};
+
 const staticController = async (req, res, logger) => {
-  if (req.url === '/' || req.url.startsWith('/article') || req.url.startsWith('/about') || req.url.startsWith('/feedback')) {
-    req.url = '/index.html';
-  }
+  req.url = pathes[req.url] ? pathes[req.url] : req.url;
   const paths = [STATIC_PATH, req.url];
   const filePath = path.join(...paths);
   if (!await isFileExist(filePath)) {
