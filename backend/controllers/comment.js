@@ -2,6 +2,7 @@ const { pool } = require('../db/pool.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const { HOST } = require('../config/config.js');
+const { isUserLogined } = require('./login.js');
 
 const isBadId = (id) => isNaN(id);
 
@@ -68,7 +69,11 @@ const createComment = async (req, res, logger, body) => {
   await universalController(req, res, logger, query, 201, queryData);
 };
 
-const deleteComment = async (req, res, logger, body) => {
+const deleteComment = async (req, res, logger, body, cookies) => {
+  if (!isUserLogined(cookies)) {
+    res.writeHead(401);
+    return void res.end('Not authorised');
+  }
   const commentId = body.comment_id;
   if (isBadId(commentId)) {
     res.writeHead(400);

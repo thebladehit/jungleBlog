@@ -10,6 +10,8 @@ setInterval(() => {
   token = generateToken();
 }, RENEW_TOKEN_TIME);
 
+const isUserLogined = (cookies) => cookies.loginToken && +cookies.loginToken === token;
+
 const loginUser = (req, res, logger, body) => {
   try {
     if (body.login === ADMIN_LOGIN && body.password === ADMIN_PASS) {
@@ -30,7 +32,7 @@ const loginUser = (req, res, logger, body) => {
 
 const checkLogin = (req, res, logger, body, cookies) => {
   try {
-    if (cookies.loginToken && +cookies.loginToken === token) {
+    if (isUserLogined(cookies)) {
       res.writeHead(200);
       res.end('logined');
     } else {
@@ -42,10 +44,6 @@ const checkLogin = (req, res, logger, body, cookies) => {
     res.end('Something went wrong');
     logger.err(err);
   }
-};
-
-const isUserLogined = (cookies) => {
-  console.log(cookies);
 };
 
 module.exports = { loginUser, isUserLogined, checkLogin };
