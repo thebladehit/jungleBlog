@@ -11,7 +11,7 @@ const TIME_ZONE = process.env.TIME_ZONE;
 const POSTING_STORY_TIME = process.env.POSTING_STORY_TIME;
 const IMAGE_QUALITY = process.env.IMAGE_QUALITY;
 const CACHE_LIMIT_ITEMS = process.env.CACHE_LIMIT_ITEMS;
-const RENEW_TOKEN_TIME = process.RENEW_TOKEN_TIME;
+const RENEW_TOKEN_TIME = process.env.RENEW_TOKEN_TIME;
 const ADMIN_LOGIN = process.env.ADMIN_LOGIN;
 const ADMIN_PASS = process.env.ADMIN_PASS;
 
