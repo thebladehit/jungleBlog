@@ -12,6 +12,7 @@ const { staticController } = require('./controllers/static.js');
 const { getStories, getStory, updateStory } = require('./controllers/story.js');
 const { getAllComments, getCommentsByStoryId, createComment, deleteComment } = require('./controllers/comment.js');
 const { getFeedbacks, createFeedback } = require('./controllers/feedback.js');
+const { loginUser, checkLogin } = require('./controllers/login.js');
 
 let logger;
 
@@ -30,6 +31,10 @@ const routing = {
   '/feedbacks': {
     GET: getFeedbacks,
     POST: createFeedback
+  },
+  '/login': {
+    POST: loginUser,
+    GET: checkLogin
   }
 };
 
@@ -41,6 +46,17 @@ const bodyParser = async (req) => {
   const stringData = Buffer.concat(data).toString();
   if (!stringData) return;
   return JSON.parse(stringData);
+};
+
+const cookiesParser = (req) => {
+  if (!req.headers.cookie) return;
+  const splited = req.headers.cookie.split(';');
+  const cookies = {};
+  for (const item of splited) {
+    const [name, value] = item.trim().split('=');
+    cookies[name] = value;
+  }
+  return cookies;
 };
 
 const rxRouting = [];
@@ -77,8 +93,9 @@ const server = http.createServer(async (req, res) => {
   if (!methods) staticController(req, res, logger);
   else {
     const body = await bodyParser(req);
+    const cookies = cookiesParser(req);
     const controller = methods[req.method];
-    if (controller) return void controller(req, res, logger, body);
+    if (controller) return void controller(req, res, logger, body, cookies);
     res.writeHead(400);
     res.end('No such path');
   }

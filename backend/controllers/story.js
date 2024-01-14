@@ -1,6 +1,7 @@
 const { pool } = require('../db/pool.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
+const { isUserLogined } = require('./login.js');
 
 const getStories = async (req, res, logger) => {
   try {
@@ -45,8 +46,12 @@ const getStory = async (req, res, logger) => {
   }
 };
 
-const updateStory = async (req, res, logger, body) => {
+const updateStory = async (req, res, logger, body, cookies) => {
   try {
+    if (!isUserLogined(cookies)) {
+      res.writeHead(401);
+      return void res.end('Not authorised');
+    }
     const storyId = body.story_id;
     if (isNaN(+storyId)) {
       res.writeHead(400);
