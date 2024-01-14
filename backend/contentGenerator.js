@@ -1,18 +1,18 @@
 'use strict';
 
 require('dotenv').config();
-const path = require('node:path');
 const WebSocket = require('ws');
-const { writeFile, createDir } = require('./fs/fs.js');
 const OpenAI = require('openai');
-const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY, PORT } = require('./config/config.js');
+const path = require('node:path');
+const { pool } = require('./db/pool.js');
+const { Logger } = require('./logger/logger.js');
+const { writeFile, createDir } = require('./fs/fs.js');
+const { cacher } = require('./cacher/cacherSingleton.js');
 const storiesTheme = require('./data/thmesForStories.json');
 const themeIndexObj = require('./data/nextThemeIndex.json');
-const { pool } = require('./db/pool.js');
-const { cacher } = require('./cacher/cacherSingleton.js');
-const { requestBenchMark, convertFromB64toBuffer } = require('./gpt-api/toolsesForApi.js');
 const { generateText, genetateImage } = require('./gpt-api/gptApi.js');
-const { Logger } = require('./logger/logger.js');
+const { requestBenchMark, convertFromB64toBuffer } = require('./gpt-api/toolsesForApi.js');
+const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY, PORT } = require('./config/config.js');
 
 const openai = new OpenAI({
   apiKey: OPENAI_TOKEN
@@ -39,7 +39,7 @@ const generateStory = async (logger) => {
     const themeIndex = themeIndexObj.themeIndex++;
     const theme = storiesTheme[themeIndex];
     const messages = [
-      { 'role': 'system', 'content': 'Write a first-person narrative as a part of notes entry for [Day_id] of surviving on a deserted island. Describe [desc], detailing the personal experiences, challenges faced, and survival strategies used' },
+      { 'role': 'system', 'content': `Write a first-person narrative as a part of notes entry for ${themeIndex} of surviving on a deserted island. Describe detailing the personal experiences, challenges faced, and survival strategies used` },
       { 'role': 'user', 'content': `Write a first-person narrative as a diary entry for ${theme.title} of surviving on a deserted island. Describe ${theme.content}, detailing the personal experiences, challenges faced, and survival strategies used` }
     ];
     const textParams = [openai, GPT_MODEL_TEXT, messages];
