@@ -17,7 +17,13 @@
         if (msg.msgType === "reloadComments" && +msg.data.storyId === +id) {
             getCommentsById();
         }
+        if (msg.msgType === "reloadPosts") {
+            fetchArticles();
+        }
     };
+
+    $: article = $articlesData.find(a => a.story_id === parseInt(id));
+    $: showContent = !!article;
 
     onMount(async () => {
         const unsubscribe = websocket.subscribe(ws => {
@@ -29,8 +35,6 @@
 
         await fetchArticles();
         await getCommentsById();
-
-        article = $articlesData.find(a => a.story_id === parseInt(id));
 
         if (article) {
             showContent = true;
