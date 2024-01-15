@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('node:path');
 const { appendFile, createDir } = require('../fs/fs.js');
 

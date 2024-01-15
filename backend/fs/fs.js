@@ -1,3 +1,5 @@
+'use strict';
+
 const fsp = require('node:fs').promises;
 
 const readFile = async (path) => {

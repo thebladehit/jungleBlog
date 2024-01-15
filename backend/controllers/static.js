@@ -1,7 +1,9 @@
+'use strict';
+
 const path = require('node:path');
-const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const { readFile, isFileExist } = require('../fs/fs.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
+const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 
 const STATIC_PATH = path.resolve(__dirname, '..', 'static');
 

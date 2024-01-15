@@ -9,10 +9,10 @@ const { Logger } = require('./logger/logger.js');
 const { wsController } = require('./controllers/ws.js');
 const { cacher } = require('./cacher/cacherSingleton.js');
 const { staticController } = require('./controllers/static.js');
+const { loginUser, checkLogin } = require('./controllers/login.js');
+const { getFeedbacks, createFeedback } = require('./controllers/feedback.js');
 const { getStories, getStory, updateStory } = require('./controllers/story.js');
 const { getAllComments, getCommentsByStoryId, createComment, deleteComment } = require('./controllers/comment.js');
-const { getFeedbacks, createFeedback } = require('./controllers/feedback.js');
-const { loginUser, checkLogin } = require('./controllers/login.js');
 
 let logger;
 
@@ -70,9 +70,6 @@ for (const key in routing) {
 }
 
 const server = http.createServer(async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') {
     res.writeHead(200);
     return void res.end();

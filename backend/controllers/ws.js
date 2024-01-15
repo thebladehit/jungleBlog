@@ -10,7 +10,7 @@ const msgTypes = {
 const wsController = (ws, logger) => {
   ws.on('connection', (connection) => {
     connection.on('error', logger.error);
-    connection.on('message', (msg) => { // msg : { msgType: 'string', data: 'object' }
+    connection.on('message', (msg) => {
       try {
         msg = JSON.parse(msg);
         const message = msgTypes[msg.msgType](msg.data);

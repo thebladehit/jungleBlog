@@ -1,8 +1,10 @@
+'use strict';
+
 const { pool } = require('../db/pool.js');
-const { cacher } = require('../cacher/cacherSingleton.js');
-const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 const { HOST } = require('../config/config.js');
 const { isUserLogined } = require('./login.js');
+const { cacher } = require('../cacher/cacherSingleton.js');
+const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 
 const isBadId = (id) => isNaN(id);
 
