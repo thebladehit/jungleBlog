@@ -1,17 +1,27 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
+    import { websocket } from '../websocketStore.js';
 
     let url = import.meta.env.VITE_SERVER_URL;
     let showContent = false;
     let name = '';
     let feedback_text = '';
+    let socket;
 
     onMount(() => {
+        const unsubscribe = websocket.subscribe(ws => {
+            socket = ws;
+        });
+
         setTimeout(() => {
             showContent = true;
         }, 100);
         name = localStorage.getItem('name') || '';
+
+        return () => {
+            unsubscribe();
+        };
     });
 
     async function sendFeedback() {
@@ -34,6 +44,10 @@
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ msgType: 'newFeedback' }));
                 }
 
             } catch (error) {
