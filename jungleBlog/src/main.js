@@ -1,5 +1,5 @@
-import './app.css'
-import App from './App.svelte'
+import './app.css';
+import App from './App.svelte';
 import { initWebSocket } from './websocketStore.js';
 
 const url = import.meta.env.VITE_SERVER_URL;
@@ -11,6 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const app = new App({
   target: document.getElementById('app'),
-})
+});
 
-export default app
+export default app;
