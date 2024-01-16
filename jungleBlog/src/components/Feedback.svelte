@@ -1,41 +1,64 @@
 <script>
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
+    import { websocket } from '../websocketStore.js';
 
+    let url = import.meta.env.VITE_SERVER_URL;
     let showContent = false;
     let name = '';
-    let feedback = '';
+    let feedback_text = '';
+    let socket;
 
     onMount(() => {
+        const unsubscribe = websocket.subscribe(ws => {
+            socket = ws;
+        });
+
         setTimeout(() => {
             showContent = true;
         }, 100);
+        name = localStorage.getItem('name') || '';
+
+        return () => {
+            unsubscribe();
+        };
     });
 
     async function sendFeedback() {
-        let googleFormUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSeyrZwbJHGNH6ApIjzNan01331WTHfUpeBrNRlTVyGo5mMCHQ/formResponse';
-        let formData = new FormData();
-        formData.append('entry.1405310170', name);
-        formData.append('entry.228219932', feedback);
+        if (name.trim().length === 0 || feedback_text.trim().length === 0) {
+            alert('Fill all fields!');
+        } else {
+            const feedbackData = {
+                name: name,
+                text: feedback_text,
+            };
 
-        try {
-            let response = await fetch(googleFormUrl, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            });
+            try {
+                const response = await fetch(`http://${url}/feedbacks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData),
+                });
 
-            if (response.ok) {
-                console.log('Feedback was sent!');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ msgType: 'newFeedback' }));
+                }
+
+            } catch (error) {
+                console.error('Error creating feedback:', error);
             }
-        } catch (error) {
-            console.error('Error while sending feedback!', error);
+
+            localStorage.setItem('name', name);
+            feedback_text = '';
+
+            alert('Thank you for your feedback!')
         }
-
-        name = '';
-        feedback = '';
-
-        alert('Thank you for your feedback!')
     }
 
 </script>
@@ -46,7 +69,7 @@
     <h2 in:fade={{duration: 1000 }}>You can ask questions or leave feedback here. We are glad to hear from you.</h2>
     <section class="form-section" in:fade={{duration: 1000 }}>
         <input bind:value={name} placeholder="Name" />
-        <textarea bind:value={feedback} placeholder="Feedback"></textarea>
+        <textarea bind:value={feedback_text} placeholder="Feedback"></textarea>
         <div class="button-container">
             <button on:click={sendFeedback}>Send</button>
         </div>
