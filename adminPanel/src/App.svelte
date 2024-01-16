@@ -16,10 +16,7 @@
 
   onMount(async () => {
     const response = await fetch('http://' + import.meta.env.VITE_HOST + '/login', { method: 'GET' });
-    if (response.ok) {
-      logined = true;
-      console.log('here');
-    }
+    if (response.ok) logined = true;
   });
 </script>
 
