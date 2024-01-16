@@ -1,14 +1,14 @@
 <script>
-    import { onMount } from 'svelte';
-    import {fade} from "svelte/transition";
+  import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
 
-    let showContent = false;
+  let showContent = false;
 
-    onMount(() => {
-        setTimeout(() => {
-            showContent = true;
-        }, 100);
-    });
+  onMount(() => {
+    setTimeout(() => {
+      showContent = true;
+    }, 100);
+  });
 </script>
 
 <div class="content">

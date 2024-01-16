@@ -1,19 +1,19 @@
 <script>
-    import {Router, Route, Link} from "svelte-routing";
+  import { Link } from 'svelte-routing';
 
-    let isNavOpen = false;
-    const isDark = localStorage.getItem('theme')
+  let isNavOpen = false;
+  const isDark = localStorage.getItem('theme');
 
-    function toggleTheme(){
-        const body = document.body;
-        const newTheme = body.dataset.theme === 'dark' ? 'default' : 'dark';
-        body.dataset.theme = newTheme
-        localStorage.setItem('theme', newTheme)
-    }
+  function toggleTheme() {
+    const body = document.body;
+    const newTheme = body.dataset.theme === 'dark' ? 'default' : 'dark';
+    body.dataset.theme = newTheme;
+    localStorage.setItem('theme', newTheme);
+  }
 
-    function toggleNav() {
-        isNavOpen = !isNavOpen;
-    }
+  function toggleNav() {
+    isNavOpen = !isNavOpen;
+  }
 </script>
 
 <header>

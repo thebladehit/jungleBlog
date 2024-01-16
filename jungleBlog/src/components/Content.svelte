@@ -1,15 +1,14 @@
 <script>
-    import photo from '/res/mainPhoto.png';
-    import photoDark from '/res/mainPhotoDark.png';
-    
-    const isDark = localStorage.getItem('theme')
-    let photoUrl = isDark === 'dark' ? photoDark : photo;
+  import photo from '/res/mainPhoto.png';
+  import photoDark from '/res/mainPhotoDark.png';
 
-    document.querySelector('.theme-switcher').addEventListener('click', () =>{
-        const isDark = localStorage.getItem('theme')
-        photoUrl = isDark === 'dark' ? photoDark : photo;
-    });    
+  const isDark = localStorage.getItem('theme');
+  let photoUrl = isDark === 'dark' ? photoDark : photo;
 
+  document.querySelector('.theme-switcher').addEventListener('click', () => {
+    const isDark = localStorage.getItem('theme');
+    photoUrl = isDark === 'dark' ? photoDark : photo;
+  });
 </script>
 
 <div class="title">
@@ -80,7 +79,7 @@
         display: flex;
         justify-content: space-between;
     }
-    
+
     .second {
         text-align: right;
     }
@@ -152,7 +151,7 @@
             width: 100%;
         }
     }
-    
+
     @media (min-width: 900px) and (max-width: 1300px){
         .rightText, p.rightParagraph, .second h1{
             margin-right: 10px;

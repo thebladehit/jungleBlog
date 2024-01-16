@@ -1,5 +1,5 @@
 <script>
-    export let article;
+  export let article;
 </script>
 
 <div class="card">

@@ -1,125 +1,124 @@
 <script>
-    import { fade } from 'svelte/transition';
-    import { onMount} from "svelte";
-    import { articlesData, fetchArticles } from "../articlesStore.js";
-    import { websocket } from '../websocketStore.js';
-    export let id;
-    let url = import.meta.env.VITE_SERVER_URL;
-    let article;
-    let showContent = false;
-    let comments = [];
-    let name = '';
-    let commentText = '';
-    let socket;
+  import { fade } from 'svelte/transition';
+  import { onMount } from 'svelte';
+  import { articlesData, fetchArticles } from '../articlesStore.js';
+  import { websocket } from '../websocketStore.js';
+  export let id;
+  let url = import.meta.env.VITE_SERVER_URL;
+  let article;
+  let showContent = false;
+  let comments = [];
+  let name = '';
+  let commentText = '';
+  let socket;
 
-    const messageHandler = (msg) => {
-        msg = JSON.parse(msg.data);
-        if (msg.msgType === "reloadComments" && +msg.data.storyId === +id) {
-            getCommentsById();
-        }
-        if (msg.msgType === "reloadPosts") {
-            fetchArticles();
-        }
-    };
+  const messageHandler = (msg) => {
+    msg = JSON.parse(msg.data);
+    if (msg.msgType === 'reloadComments' && +msg.data.storyId === +id) {
+      getCommentsById();
+    }
+    if (msg.msgType === 'reloadPosts') {
+      fetchArticles();
+    }
+  };
 
-    $: article = $articlesData.find(a => a.story_id === parseInt(id));
-    $: showContent = !!article;
+  $: article = $articlesData.find((a) => a.story_id === parseInt(id));
+  $: showContent = !!article;
 
-    onMount(async () => {
-        const unsubscribe = websocket.subscribe(ws => {
-            socket = ws;
-            if (socket) {
-                socket.addEventListener("message", messageHandler);
-            }
-        });
-
-        await fetchArticles();
-        await getCommentsById();
-
-        if (article) {
-            showContent = true;
-        } else {
-            console.log("Article not found!");
-        }
-
-        name = localStorage.getItem('name') || '';
-
-        return () => {
-            if (socket) {
-                socket.removeEventListener("message", messageHandler);
-            }
-            unsubscribe();
-        };
+  onMount(async () => {
+    const unsubscribe = websocket.subscribe((ws) => {
+      socket = ws;
+      if (socket) {
+        socket.addEventListener('message', messageHandler);
+      }
     });
 
-    async function sendComment() {
-        if (name.trim().length === 0 || commentText.trim().length === 0) {
-            alert('Fill all fields!');
-        } else {
-            const commentData = {
-                story_id: parseInt(id),
-                username: name,
-                comment_text: commentText,
-            };
+    await fetchArticles();
+    await getCommentsById();
 
-            try {
-                const response = await fetch(`http://${url}/comment`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(commentData),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                if (socket && socket.readyState === WebSocket.OPEN) {
-                    socket.send(JSON.stringify({ msgType: 'newComment', data: { storyId: id } }));
-                }
-
-            } catch (error) {
-                console.error('Error creating comment:', error);
-            }
-
-            localStorage.setItem('name', name);
-            commentText = '';
-        }
+    if (article) {
+      showContent = true;
+    } else {
+      console.log('Article not found!');
     }
 
-    async function getCommentsById() {
-        try {
-            const response = await fetch(`http://${url}/comment/${parseInt(id)}`, {
-                method: 'GET',
-            });
+    name = localStorage.getItem('name') || '';
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+    return () => {
+      if (socket) {
+        socket.removeEventListener('message', messageHandler);
+      }
+      unsubscribe();
+    };
+  });
 
-            const commentsById = await response.json();
+  async function sendComment() {
+    if (name.trim().length === 0 || commentText.trim().length === 0) {
+      alert('Fill all fields!');
+    } else {
+      const commentData = {
+        story_id: parseInt(id),
+        username: name,
+        comment_text: commentText,
+      };
 
-            comments = [...commentsById];
-
-        } catch (error) {
-            console.error('Error getting comment:', error);
-        }
-    }
-
-    function formatLocalDateTime(isoString) {
-        const date = new Date(isoString);
-        return date.toLocaleString(navigator.language, {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
+      try {
+        const response = await fetch(`http://${url}/comment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(commentData),
         });
-    }
 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.send(
+            JSON.stringify({ msgType: 'newComment', data: { storyId: id } }),
+          );
+        }
+      } catch (error) {
+        console.error('Error creating comment:', error);
+      }
+
+      localStorage.setItem('name', name);
+      commentText = '';
+    }
+  }
+
+  async function getCommentsById() {
+    try {
+      const response = await fetch(`http://${url}/comment/${parseInt(id)}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const commentsById = await response.json();
+
+      comments = [...commentsById];
+    } catch (error) {
+      console.error('Error getting comment:', error);
+    }
+  }
+
+  function formatLocalDateTime(isoString) {
+    const date = new Date(isoString);
+    return date.toLocaleString(navigator.language, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
+  }
 </script>
 
 <main>

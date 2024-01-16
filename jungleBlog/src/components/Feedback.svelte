@@ -1,66 +1,64 @@
 <script>
-    import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
-    import { websocket } from '../websocketStore.js';
+  import { onMount } from 'svelte';
+  import { fade } from 'svelte/transition';
+  import { websocket } from '../websocketStore.js';
 
-    let url = import.meta.env.VITE_SERVER_URL;
-    let showContent = false;
-    let name = '';
-    let feedback_text = '';
-    let socket;
+  let url = import.meta.env.VITE_SERVER_URL;
+  let showContent = false;
+  let name = '';
+  let feedback_text = '';
+  let socket;
 
-    onMount(() => {
-        const unsubscribe = websocket.subscribe(ws => {
-            socket = ws;
-        });
-
-        setTimeout(() => {
-            showContent = true;
-        }, 100);
-        name = localStorage.getItem('name') || '';
-
-        return () => {
-            unsubscribe();
-        };
+  onMount(() => {
+    const unsubscribe = websocket.subscribe((ws) => {
+      socket = ws;
     });
 
-    async function sendFeedback() {
-        if (name.trim().length === 0 || feedback_text.trim().length === 0) {
-            alert('Fill all fields!');
-        } else {
-            const feedbackData = {
-                name: name,
-                text: feedback_text,
-            };
+    setTimeout(() => {
+      showContent = true;
+    }, 100);
+    name = localStorage.getItem('name') || '';
 
-            try {
-                const response = await fetch(`http://${url}/feedbacks`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(feedbackData),
-                });
+    return () => {
+      unsubscribe();
+    };
+  });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+  async function sendFeedback() {
+    if (name.trim().length === 0 || feedback_text.trim().length === 0) {
+      alert('Fill all fields!');
+    } else {
+      const feedbackData = {
+        name: name,
+        text: feedback_text,
+      };
 
-                if (socket && socket.readyState === WebSocket.OPEN) {
-                    socket.send(JSON.stringify({ msgType: 'newFeedback' }));
-                }
+      try {
+        const response = await fetch(`http://${url}/feedbacks`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(feedbackData),
+        });
 
-            } catch (error) {
-                console.error('Error creating feedback:', error);
-            }
-
-            localStorage.setItem('name', name);
-            feedback_text = '';
-
-            alert('Thank you for your feedback!')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }
 
+        if (socket && socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({ msgType: 'newFeedback' }));
+        }
+      } catch (error) {
+        console.error('Error creating feedback:', error);
+      }
+
+      localStorage.setItem('name', name);
+      feedback_text = '';
+
+      alert('Thank you for your feedback!');
+    }
+  }
 </script>
 
 <main>
