@@ -5,7 +5,7 @@
   import { websocket } from '../websocketStore.js';
   import {bannedWords} from "../bannedWords.js";
   export let id;
-  let url = import.meta.env.VITE_SERVER_URL;
+  const url = import.meta.env.VITE_SERVER_URL;
   let article;
   let showContent = false;
   let comments = [];
@@ -152,7 +152,7 @@
             <section class="text-section">
                 <h1>{article.title}</h1>
                 <div class="image-section">
-                    <img src={article.image_url} alt={article.title} />
+                    <img src={`http://${url}/${article.image_url}`} alt={article.title} />
                 </div>
                 <p>{article.content}</p>
             </section>
