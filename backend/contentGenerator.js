@@ -12,7 +12,7 @@ const storiesTheme = require('./data/thmesForStories.json');
 const themeIndexObj = require('./data/nextThemeIndex.json');
 const { generateText, genetateImage } = require('./gpt-api/gptApi.js');
 const { requestBenchMark, convertFromB64toBuffer } = require('./gpt-api/toolsesForApi.js');
-const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY, PORT } = require('./config/config.js');
+const { OPENAI_TOKEN, GPT_MODEL_TEXT, GPT_MODEL_IMAGE, TIME_ZONE, POSTING_STORY_TIME, IMAGE_QUALITY, PORT, POSTING_INTERVAL } = require('./config/config.js');
 
 const openai = new OpenAI({
   apiKey: OPENAI_TOKEN
@@ -69,7 +69,13 @@ const startGenerateContent = async () => {
   const milisecondsToStart = getMilisecondsToHour(POSTING_STORY_TIME, TIME_ZONE);
   setTimeout(() => {
     generateStory(logger);
-    setInterval(generateStory, 1000 * 60 * 60 * 24, logger);
+    const intervalTimer = setInterval(() => {
+      if (!storiesTheme[themeIndexObj.themeIndex]) {
+        clearInterval(intervalTimer);
+      } else {
+        generateStory(logger);
+      }
+    }, POSTING_INTERVAL);
   }, milisecondsToStart);
 };
 
