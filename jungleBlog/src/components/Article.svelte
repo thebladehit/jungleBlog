@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { articlesData, fetchArticles } from '../articlesStore.js';
   import { websocket } from '../websocketStore.js';
+  import {bannedWords} from "../bannedWords.js";
   export let id;
   let url = import.meta.env.VITE_SERVER_URL;
   let article;
@@ -11,6 +12,7 @@
   let name = '';
   let commentText = '';
   let socket;
+  let canSendComment = true;
 
   const messageHandler = (msg) => {
     msg = JSON.parse(msg.data);
@@ -56,6 +58,23 @@
     if (name.trim().length === 0 || commentText.trim().length === 0) {
       alert('Fill all fields!');
     } else {
+      if(!canSendComment){
+        alert('Please wait before sending another comment.')
+        return;
+      }
+
+      const nameContainsBannedWord = bannedWords.some(word => name.includes(word));
+        if (nameContainsBannedWord) {
+          alert('Your name contains inappropriate language.');
+          return;
+        }
+
+      const commentContainsBannedWord = bannedWords.some(word => commentText.includes(word));
+        if (commentContainsBannedWord) {
+          alert('Your comment contains inappropriate language.');
+          return;
+        }
+
       const commentData = {
         story_id: parseInt(id),
         username: name,
@@ -86,6 +105,12 @@
 
       localStorage.setItem('name', name);
       commentText = '';
+
+      canSendComment = false;
+      setTimeout(() => {
+          canSendComment = true;
+      }, 30000);
+
     }
   }
 
