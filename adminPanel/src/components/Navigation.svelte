@@ -24,6 +24,8 @@
         commentsData.set(await fetchComments());
       } else if (msgData.msgType === 'reloadPosts') {
         storiesData.set(await fetchStories());
+      } else if (msgData.msgType === 'reloadFeedbacks') {
+        feedbacksData.set(await fetchFeedbacks());
       }
     });
   });
