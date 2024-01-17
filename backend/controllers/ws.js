@@ -5,6 +5,7 @@ const WebSocket = require('ws');
 const msgTypes = {
   newComment: (recieveData) => JSON.stringify({ msgType: 'reloadComments', data: { storyId: recieveData.storyId }}),
   newPost: () => JSON.stringify({ msgType: 'reloadPosts' }),
+  newFeedback: () => JSON.stringify({ msgType: 'reloadFeedbacks' })
 };
 
 const wsController = (ws, logger) => {
