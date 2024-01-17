@@ -24,6 +24,7 @@
     }
   };
 
+  $: showComments = comments.length > 0;
   $: article = $articlesData.find((a) => a.story_id === parseInt(id));
   $: showContent = !!article;
 
@@ -164,15 +165,17 @@
                 <button on:click={sendComment}>Send</button>
             </div>
         </section>
-        <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
-            {#each comments as item}
-                <div class="comment">
-                    <h2>{item.username}</h2>
-                    <p>{item.comment_text}</p>
-                    <div class="date">{formatLocalDateTime(item.created_at)}</div>
-                </div>
-            {/each}
-        </section>
+        {#if showComments}
+            <section class="comments-section" in:fade={{ x: 200, duration: 1000 }}>
+                {#each comments as item}
+                    <div class="comment">
+                        <h2>{item.username}</h2>
+                        <p>{item.comment_text}</p>
+                        <div class="date">{formatLocalDateTime(item.created_at)}</div>
+                    </div>
+                {/each}
+            </section>
+        {/if}
     {/if}
 </main>
 
