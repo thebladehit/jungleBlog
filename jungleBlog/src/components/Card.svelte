@@ -1,10 +1,15 @@
 <script>
   export let article;
+
+  $: shortenedTitle = article.title.length > 25
+    ? article.title.slice(0, 25) + '...'
+    : article.title;
+
 </script>
 
 <div class="card">
     <div class="text-content">
-        <h1>{article.title}</h1>
+        <h1>{shortenedTitle}</h1>
     </div>
     <div class="image-content">
         <img src={article.image_url} alt={article.title} />
