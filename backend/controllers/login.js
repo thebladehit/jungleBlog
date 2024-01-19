@@ -28,7 +28,7 @@ const loginUser = async (req, res, logger, body) => {
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
-    await logger.err(err);
+    await logger.error(err);
   }
 };
 
@@ -44,7 +44,7 @@ const checkLogin = (req, res, logger, body, cookies) => {
   } catch (err) {
     res.writeHead(500);
     res.end('Something went wrong');
-    logger.err(err);
+    logger.error(err);
   }
 };
 
