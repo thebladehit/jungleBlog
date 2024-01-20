@@ -148,6 +148,10 @@
             display: flex;
         }
 
+        .header-element{
+            padding: 0;
+        }
+
         nav {
             display: flex;
             flex-direction: column;
