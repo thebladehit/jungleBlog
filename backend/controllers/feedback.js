@@ -30,7 +30,7 @@ const universalController = async (req, res, logger, query, queryData) => {
   }
 };
 
-const getFeedbacks = async (req, res, logger, cookies) => {
+const getFeedbacks = async (req, res, logger, body, cookies) => {
   if (!isUserLogined(cookies)) {
     res.writeHead(401);
     return void res.end('Not authorised');
