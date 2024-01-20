@@ -12,7 +12,7 @@ setInterval(() => {
   token = generateToken();
 }, RENEW_TOKEN_TIME);
 
-const isUserLogined = (cookies) => cookies.loginToken && +cookies.loginToken === token;
+const isUserLogined = (cookies) => cookies && cookies.loginToken && +cookies.loginToken === token;
 
 const loginUser = async (req, res, logger, body) => {
   try {
