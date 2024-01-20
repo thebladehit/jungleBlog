@@ -1,10 +1,14 @@
 'use strict';
 
 const WebSocket = require('ws');
+const { cacher } = require('../cacher/cacherSingleton.js');
 
 const msgTypes = {
   newComment: (recieveData) => JSON.stringify({ msgType: 'reloadComments', data: { storyId: recieveData.storyId }}),
-  newPost: () => JSON.stringify({ msgType: 'reloadPosts' }),
+  newPost: () => {
+    cacher.deleteCache('/story');
+    return JSON.stringify({ msgType: 'reloadPosts' });
+  },
   newFeedback: () => JSON.stringify({ msgType: 'reloadFeedbacks' })
 };
 

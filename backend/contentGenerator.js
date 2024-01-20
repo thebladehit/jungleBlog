@@ -7,7 +7,6 @@ const path = require('node:path');
 const { pool } = require('./db/pool.js');
 const { Logger } = require('./logger/logger.js');
 const { writeFile, createDir } = require('./fs/fs.js');
-const { cacher } = require('./cacher/cacherSingleton.js');
 const storiesTheme = require('./data/thmesForStories.json');
 const themeIndexObj = require('./data/nextThemeIndex.json');
 const { generateText, genetateImage } = require('./gpt-api/gptApi.js');
@@ -56,7 +55,6 @@ const generateStory = async (logger) => {
     await writeFile(`./static/res/themeImg/${themeIndex + 1}.jpg`, imageBuffer);
     await writeFile('./data/nextThemeIndex.json', JSON.stringify(themeIndexObj));
     await client.query(query, [theme.title, textBenchMark.data, imageUrl]);
-    cacher.deleteCache('/story');
     client.release();
     notifyAboutNewPost();
   } catch (err) {
