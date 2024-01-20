@@ -1,6 +1,7 @@
 'use strict';
 
 const { pool } = require('../db/pool.js');
+const { isUserLogined } = require('./login.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
 
@@ -29,7 +30,11 @@ const universalController = async (req, res, logger, query, queryData) => {
   }
 };
 
-const getFeedbacks = async (req, res, logger) => {
+const getFeedbacks = async (req, res, logger, cookies) => {
+  if (!isUserLogined(cookies)) {
+    res.writeHead(401);
+    return void res.end('Not authorised');
+  }
   const query = 'SELECT * FROM jungleBlog.feedbacks ORDER BY created_at DESC';
   await universalController(req, res, logger, query);
 };
