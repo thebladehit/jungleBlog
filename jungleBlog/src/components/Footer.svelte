@@ -1,5 +1,5 @@
 <footer>
-    © 2023 Kobbasa and TheBladeHit.<br class="footer-break"> All rights reserved.
+    © 2024 Kobbasa and TheBladeHit.<br class="footer-break"> All rights reserved.
 </footer>
 
 <style>
