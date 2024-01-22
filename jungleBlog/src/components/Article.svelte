@@ -83,7 +83,7 @@
       };
 
       try {
-        const response = await fetch(`http://${url}/comment`, {
+        const response = await fetch(`${import.meta.env.VITE_PROTOCOL}://${url}/comment`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -117,7 +117,7 @@
 
   async function getCommentsById() {
     try {
-      const response = await fetch(`http://${url}/comment/${parseInt(id)}`, {
+      const response = await fetch(`${import.meta.env.VITE_PROTOCOL}://${url}/comment/${parseInt(id)}`, {
         method: 'GET',
       });
 
@@ -153,7 +153,7 @@
             <section class="text-section">
                 <h1>{article.title}</h1>
                 <div class="image-section">
-                    <img src={`http://${url}/${article.image_url}`} alt={article.title} />
+                    <img src={`${import.meta.env.VITE_PROTOCOL}://${url}/${article.image_url}`} alt={article.title} />
                 </div>
                 <p>{article.content}</p>
             </section>

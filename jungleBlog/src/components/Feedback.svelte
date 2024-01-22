@@ -34,7 +34,7 @@
       };
 
       try {
-        const response = await fetch(`http://${url}/feedbacks`, {
+        const response = await fetch(`${import.meta.env.VITE_PROTOCOL}://${url}/feedbacks`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

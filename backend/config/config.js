@@ -1,5 +1,6 @@
 const PORT = process.env.PORT ?? 3000;
 const HOST = process.env.HOST ?? '127.0.0.1';
+const PROTOCOL = process.env.PROTOCOL;
 const DB_PORT = process.env.DB_PORT;
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
@@ -19,6 +20,7 @@ const ADMIN_PASS = process.env.ADMIN_PASS;
 module.exports = { 
   PORT,
   HOST, 
+  PROTOCOL,
   DB_PORT, 
   DB_NAME, 
   DB_USER, 

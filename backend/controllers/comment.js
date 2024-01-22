@@ -1,7 +1,7 @@
 'use strict';
 
 const { pool } = require('../db/pool.js');
-const { HOST } = require('../config/config.js');
+const { HOST, PROTOCOL } = require('../config/config.js');
 const { isUserLogined } = require('./login.js');
 const { cacher } = require('../cacher/cacherSingleton.js');
 const { MIME_TYPES } = require('../mimeTypes/mimetypes.js');
@@ -14,7 +14,7 @@ const getStoryIdFromUrl = (url) => {
   return +storyId;
 };
 
-const getParamsFromUrl = (url) => new URL(url, `http://${HOST}`);
+const getParamsFromUrl = (url) => new URL(url, `${PROTOCOL}://${HOST}`);
 
 const universalController = async (req, res, logger, query, code, queryData) => {
   try {

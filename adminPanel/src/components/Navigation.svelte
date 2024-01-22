@@ -17,7 +17,7 @@
     storiesData.set(await fetchStories());
     feedbacksData.set(await fetchFeedbacks());
 
-    socket = new WebSocket('ws://' + import.meta.env.VITE_HOST);
+    socket = new WebSocket(import.meta.env.VITE_WS_PROTOCOL + '://' + import.meta.env.VITE_HOST);
     socket.addEventListener('message',async (msg) => {
       const msgData = JSON.parse(msg.data);
       if (msgData.msgType === 'reloadComments') {

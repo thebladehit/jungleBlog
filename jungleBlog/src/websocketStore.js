@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 export const websocket = writable(null);
 
 export function initWebSocket(url) {
-  let ws = new WebSocket(`ws://${url}`);
+  let ws = new WebSocket(`${import.meta.env.VITE_WS_PROTOCOL}://${url}`);
 
   ws.onopen = () => {
     console.log('WebSocket connected');
