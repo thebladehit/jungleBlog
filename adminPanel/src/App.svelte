@@ -6,7 +6,7 @@
   let logined = false;
 
   const handleLogin = async (login, password) => {
-    const response = await fetch('http://' + import.meta.env.VITE_HOST + '/login', {
+    const response = await fetch(import.meta.env.VITE_PROTOCOL + '://' + import.meta.env.VITE_HOST + '/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ login, password })
@@ -15,7 +15,7 @@
   };
 
   onMount(async () => {
-    const response = await fetch('http://' + import.meta.env.VITE_HOST + '/login', { method: 'GET' });
+    const response = await fetch(import.meta.env.VITE_PROTOCOL + '://' + import.meta.env.VITE_HOST + '/login', { method: 'GET' });
     if (response.ok) logined = true;
   });
 </script>

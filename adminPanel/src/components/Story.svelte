@@ -5,7 +5,7 @@
   export let sendUpdateStory;
 
   const updateStory = async () => {
-    const response = await fetch('http://' + import.meta.env.VITE_HOST + '/story', {
+    const response = await fetch(import.meta.env.VITE_PROTOCOL + '://' + import.meta.env.VITE_HOST + '/story', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ story_id: storyData.story_id, content: storyData.content})

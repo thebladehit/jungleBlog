@@ -5,7 +5,7 @@
   export let sendDeleteComment;
 
   const deleteComment = async () => {
-    const response = await fetch('http://' + import.meta.env.VITE_HOST + '/comment', {
+    const response = await fetch(import.meta.env.VITE_PROTOCOL + '://' + import.meta.env.VITE_HOST + '/comment', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ comment_id: commentData.comment_id })
